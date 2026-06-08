@@ -1,0 +1,11 @@
+{
+  "name": "se-skills",
+  "description": "Chip vendor SE (System Engineer / Application Architect) workflow skills — from requirements decomposition through architecture design, specification authoring, cross-department design review, and traceability validation.",
+  "author": {
+    "name": "yufan"
+  },
+  "license": "MIT",
+  "commands": "./.claude/commands",
+  "skills": "./skills",
+  "agents": []
+}

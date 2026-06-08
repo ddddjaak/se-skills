@@ -1,0 +1,16 @@
+{
+  "name": "se-skills",
+  "owner": {
+    "name": "yufan"
+  },
+  "metadata": {
+    "description": "Chip vendor SE (System Engineer) workflow skills — requirements decomposition, architecture design, spec authoring, cross-department design review, and traceability validation. Covering the full SE lifecycle from raw requirements to formal specifications."
+  },
+  "plugins": [
+    {
+      "name": "se-skills",
+      "source": "./",
+      "description": "SE workflow skills for chip vendor application architects: requirements-decompose, architecture-design, spec-authoring, design-review, and traceability-matrix."
+    }
+  ]
+}
