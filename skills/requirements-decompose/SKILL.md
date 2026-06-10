@@ -224,7 +224,7 @@ A structured system requirements document saved to `docs/requirements/[project]-
 
 ## Interaction with Other Skills
 
-- **`interview-me`** (from agent-skills): Invoked inline when a requirement is too vague to classify. When the user says "system shall be robust" or "must be high-performance," invoke `interview-me` to extract what those words actually mean in measurable terms.
+- **Vague requirements handling**: When a requirement is too vague to classify (e.g., "system shall be robust" or "must be high-performance"), do NOT silently skip it. Apply the GUESS pattern: propose a quantified interpretation with reasoning, ask the user to confirm or correct. Reacting to a wrong guess is faster than generating an answer from scratch. This is built into Step 3 (RESOLVE) — every detected ambiguity gets a GUESS before surfacing.
 - **`architecture-design`**: Downstream consumer. The structured requirements document is the primary input to architecture design. Each REQ-ID becomes a constraint that architecture must satisfy.
 - **`spec-authoring`**: Two hops downstream. Requirements are referenced by specification sections and test case definitions.
 - **`traceability-matrix`**: Populates the first column of the matrix (Raw Source → System Requirement). The traceability seed table in this document's output is the starting point for the full matrix.

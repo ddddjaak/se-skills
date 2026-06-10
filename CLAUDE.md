@@ -1,64 +1,48 @@
 # SE Skills
 
-Chip vendor SE (System Engineer / Application Architect) workflow skills for Claude Code.
+This is the se-skills project — a collection of structured workflow skills for chip vendor System Engineers (Application Architects).
 
-## Overview
-
-This plugin provides a collection of structured workflow skills for chip vendor System Engineers. Each skill encodes a specific process that senior SEs follow — from raw requirements decomposition through architecture design, formal specification authoring, cross-department review, and traceability validation.
-
-Skills can be used independently or chained end-to-end for a complete project workflow.
-
-## Skills
-
-| Skill | Slash Command | Description |
-|-------|--------------|-------------|
-| using-se-skills | — (auto) | Meta-skill: discover and invoke the right SE skill |
-| requirements-decompose | `/se-requirements` | Raw inputs → structured system requirements |
-| architecture-design | `/se-architecture` | Requirements → modules, interfaces, constraints |
-| spec-authoring | `/se-spec` | Architecture → SOD, HW-SW IF Spec, Test Plan |
-| design-review | `/se-review` | Four-lens adversarial review of any SE artifact |
-| traceability-matrix | `/se-traceability` | Cross-artifact gap analysis and coverage |
-
-## Quick Start
-
-### Full Project Workflow
+## Project Structure
 
 ```
-/se-requirements  →  /se-architecture  →  /se-spec  →  /se-review  →  /se-traceability
+skills/              → Core skills (SKILL.md per directory)
+agents/              → Reusable agent personas (system-architect, hw-domain-expert, fw-domain-expert, verification-engineer, compliance-reviewer)
+.claude/commands/    → Slash commands (/se-requirements, /se-architecture, /se-spec, /se-review, /se-traceability)
+.claude-plugin/      → Plugin manifest (plugin.json, marketplace.json)
 ```
 
-### Individual Skill Usage
+## Skills by Phase
 
-- **Just need to review a colleague's architecture?** → `/se-review`
-- **Need a test plan from existing requirements?** → `/se-spec`
-- **Need to verify coverage before milestone review?** → `/se-traceability`
+| Phase | Skill | Description |
+|-------|-------|-------------|
+| **Define** | requirements-decompose | Raw inputs → structured, traceable system requirements with ownership |
+| **Design** | architecture-design | Requirements → modules, interfaces, constraints, trade-off decisions |
+| **Document** | spec-authoring | Architecture + Requirements → SOD, HW-SW IF Spec, Test Plan |
+| **Verify** | design-review | Four-lens (HW/SW/Test/System) adversarial review of any SE artifact |
+| **Validate** | traceability-matrix | Cross-artifact gap analysis: orphans, coverage gaps, action items |
 
-### Prerequisites
+The skills chain naturally: Define → Design → Document → Verify → Validate. Each skill can also be used independently.
 
-- Claude Code with plugin support
-- Works with existing `agent-skills` plugin — SE skills can invoke agent skills inline when needed
+## Conventions
 
-## Directory Structure
+- Every skill lives in `skills/<name>/SKILL.md`
+- YAML frontmatter with `name` and `description` fields
+- Description starts with what the skill does (third person), followed by trigger conditions ("Use when...")
+- Every skill has: Overview, When to Use, Process, Common Rationalizations, Red Flags, Verification
+- Skills reference each other by name (`requirements-decompose`, `architecture-design`, etc.)
+- The meta-skill `using-se-skills` governs skill discovery and invocation
+- Each skill's output is a document saved to `docs/<type>/` (e.g., `docs/requirements/`, `docs/architecture/`)
 
-```
-se-skills/
-├── .claude-plugin/
-│   ├── plugin.json
-│   └── marketplace.json
-├── .claude/
-│   └── commands/           # Slash command definitions
-│       ├── se-requirements.md
-│       ├── se-architecture.md
-│       ├── se-spec.md
-│       ├── se-review.md
-│       └── se-traceability.md
-├── skills/
-│   ├── using-se-skills/    # Meta-skill
-│   ├── requirements-decompose/
-│   ├── architecture-design/
-│   ├── spec-authoring/
-│   ├── design-review/
-│   └── traceability-matrix/
-├── SE-SKILLS-DESIGN.md     # Full design specification
-└── CLAUDE.md               # This file
-```
+## Prerequisites
+
+- All skills in the SE workflow require upstream artifacts. `architecture-design` requires structured requirements. `spec-authoring` requires confirmed architecture. `design-review` requires a completed artifact. If prerequisites are missing, skills invoke the upstream skill inline.
+
+## Boundaries
+
+- Always: Follow the skill anatomy format (Overview → When to Use → Process → Rationalizations → Red Flags → Verification)
+- Always: Every claim must trace to a requirement ID, interface ID, or constraint ID
+- Always: Quantify — "≤ 500μs" not "fast"; "≤ 2W" not "low power"
+- Never: Add skills that are vague advice instead of actionable processes
+- Never: Duplicate content between skills — reference other skills instead
+- Never: Proceed to downstream work before upstream artifacts are confirmed
+- Never: This package is independent of ae-skills — no cross-package references

@@ -383,7 +383,6 @@ docs/specs/[project]-test-plan-[scope].md      # Test Plan
 - **`requirements-decompose`**: Two hops upstream. If a specification references a requirement ID that does not resolve, or a requirement is too vague to specify against, invoke `requirements-decompose` inline.
 - **`design-review`**: Downstream. After the spec is finalized, `design-review` can adversarially review it through department lenses before distribution to the broader team.
 - **`traceability-matrix`**: Consumes this skill's output to populate the Design Element and Test Case columns of the matrix.
-- **`spec-driven-development`** (from agent-skills): Complementary. `spec-driven-development` is for software feature specs; `spec-authoring` is for chip-vendor SE specification documents. If the project also needs a software implementation spec, the two skills can be used in sequence — SE spec first (what to build), software spec second (how to build it in code).
 
 ## Common Rationalizations
 

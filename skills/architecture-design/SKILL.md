@@ -233,7 +233,7 @@ An architecture design document saved to `docs/architecture/[project]-architectu
 ## Interaction with Other Skills
 
 - **`requirements-decompose`**: Pre-requisite. If the input requirements document is missing, incomplete, or has unresolved conflicts, this skill invokes `requirements-decompose` inline rather than proceeding on unstable requirements. Architecture built on incomplete requirements is guessing, not design.
-- **`source-driven-development`** (from agent-skills): Invoked inline when architecture references third-party IP cores, standard protocol specifications, or framework constraints that need verification against official documentation. "I2C runs at 400kHz" should be verified against the chip datasheet's I2C chapter, not recited from memory.
+- **Third-party IP and standard verification**: When the architecture references third-party IP cores, standard protocol specifications (I2C, SPI, eSPI, etc.), or framework constraints, verify every claim against authoritative sources (chip datasheet, reference manual, protocol specification). Claims like "I2C runs at 400kHz" or "SPI flash responds within 10ms" must be confirmed against the relevant documentation chapter — not recited from memory or assumption.
 - **`spec-authoring`**: Downstream consumer. Every module in the architecture decomposition becomes a section in the Software Outline Design. Every interface definition becomes a detailed interface specification.
 - **`design-review`**: Can review the architecture document through HW, SW, Test, and System lenses before it is handed off to spec-authoring.
 - **`traceability-matrix`**: Populates the Architecture Element column, linking each module and interface to its source requirements.

@@ -48,37 +48,41 @@ SE Task arrives
     ├── Need to verify cross-artifact integrity? ──→ traceability-matrix
     │   (Req → Design → Test gap analysis and coverage report)
     │
-    └── Not sure what the stakeholder actually wants? ──→ interview-me (from agent-skills)
-        (Clarify vague inputs before starting requirements decomposition)
+    └── Stakeholder requirements vague or ambiguous?
+        → Surface ambiguity, ask one question at a time,
+          propose GUESSes with reasoning (wrong guess is faster
+          to correct than a blank answer). Then proceed to
+          requirements-decompose once you reach ~95% confidence.
 ```
 
 ## The SE Workflow Chain
 
 For a complete chip application project, the typical skill sequence is:
 
-```
-1. interview-me               → Extract what the stakeholder actually wants
-    (from agent-skills)         (used when input requirements are vague)
+**Before starting:** If stakeholder requirements are vague or ambiguous (e.g., "system shall be robust," "must be high-performance"), surface the ambiguity first. Ask clarifying questions one at a time. Propose a GUESS — a quantified interpretation with reasoning — and ask the stakeholder to confirm or correct. Reacting to a wrong guess is faster than asking open-ended "what do you mean?" questions. Proceed to requirements decomposition only once you have ~95% confidence in what's being asked.
 
-2. requirements-decompose     → Raw inputs → Structured system requirements
+```
+1. requirements-decompose     → Raw inputs → Structured system requirements
                                  with domain classification, ownership assignment,
                                  conflict resolution, and traceability IDs
 
-3. architecture-design        → Requirements → Module decomposition,
+2. architecture-design        → Requirements → Module decomposition,
                                  interface definitions, constraint analysis,
                                  trade-off decisions
 
-4. spec-authoring             → Architecture + Requirements → Formal specs:
+3. spec-authoring             → Architecture + Requirements → Formal specs:
                                  SOD, HW-SW IF Spec, Test Plan
 
-5. design-review              → Adversarial cross-department review through
+4. design-review              → Adversarial cross-department review through
                                  four lenses before artifact distribution
 
-6. traceability-matrix        → Cross-artifact validation:
+5. traceability-matrix        → Cross-artifact validation:
                                  coverage gaps, orphans, action items
 ```
 
 **Note:** `traceability-matrix` can (and should) be run after every artifact is produced, not just at the end. It is the quality check that runs across the chain.
+
+**Not every task needs every skill.** A standalone design review only requires `design-review`. A gap analysis before milestone only requires `traceability-matrix`. A new feature from scratch might require all five in sequence. The chain is a map, not a mandatory route — use the skills that match your current task.
 
 ## Core Operating Behaviors
 
@@ -108,16 +112,55 @@ Every skill includes a verification checklist. A skill is not complete until the
 
 Every artifact references its inputs with exact version numbers. When an input changes version, all dependent artifacts must be checked for consistency. Version skew between artifacts is a primary source of integration errors.
 
+### 7. Surface Assumptions
+
+When decomposing requirements or designing architecture, explicitly declare what you are assuming. Every unstated assumption is a potential rework trigger:
+
+```
+DESIGN ASSUMPTIONS:
+1. SPI flash is quad-mode capable (Datasheet §3.2 implies but does not confirm)
+2. Power sequencer is single-rail-sequencer (if multi-sequencer, adds N parallel state machines)
+3. eSPI operates at 66MHz (per Standard §2; confirm HW team has not changed to 33MHz)
+→ Correct me now, or I will proceed with these assumptions baked in.
+```
+
+Do not silently fill in gaps. The most expensive SE mistake is an assumption made in architecture that turns out false during integration. Surface uncertainty early — it's cheaper than rework.
+
+### 8. Push Back When Warranted
+
+You are not a yes-man. When a design decision, requirement, or constraint has clear problems:
+
+- Call out the issue directly and specifically
+- Explain the concrete negative impact — quantify it ("this adds ~300ms to boot time" not "this might be slower")
+- Propose an alternative with reasoning
+- If the stakeholder overrides after hearing the full picture, accept and document the decision with the override rationale
+
+Syndophancy is a failure mode. "Of course!" and then implementing a bad architecture decision that costs months of rework helps no one. Honest, professional technical dissent is worth more than false agreement.
+
+### 9. Maintain Scope Discipline
+
+Only touch what you were asked to touch. Do not:
+
+- Redesign modules outside the current change scope
+- "Clean up" unrelated sections of the architecture document
+- Expand the requirements decomposition to adjacent subsystems without being asked
+- Resolve constraints that are not blocking the current task
+- Add derived requirements for modules that are not in scope
+
+Your job is surgical precision on the task at hand, not unsolicited renovation of the entire system design.
+
 ## Failure Modes to Avoid
 
 1. Jumping to architecture design before requirements are decomposed and confirmed (architecture on unstable requirements is guessing)
-2. Defining interfaces without timing, error handling, and concurrency models ("I2C" is not an interface specification)
-3. Generating specifications with empty sections (a blank section communicates "not designed," not "not applicable")
-4. Accepting TBDs without owners and due dates (an unowned TBD is a project risk)
-5. Reviewing your own artifact without fresh-context adversarial reviewers (you will see what you expect to see)
-6. Running traceability only at the end (gaps found late cost more to fix; run after every artifact)
-7. Being sycophantic — "of course!" to a bad architecture decision that will cost months of rework
-8. Classifying requirements without inventorying all input sources (missing sources discovered later invalidate the classification)
+2. Accepting vague stakeholder requirements without surfacing ambiguity — ask clarifying questions, propose GUESSes, resolve before proceeding
+3. Defining interfaces without timing, error handling, and concurrency models ("I2C" is not an interface specification)
+4. Generating specifications with empty sections (a blank section communicates "not designed," not "not applicable")
+5. Accepting TBDs without owners and due dates (an unowned TBD is a project risk)
+6. Reviewing your own artifact without fresh-context adversarial reviewers (you will see what you expect to see)
+7. Running traceability only at the end (gaps found late cost more to fix; run after every artifact)
+8. Being sycophantic — "of course!" to a bad architecture decision that will cost months of rework
+9. Classifying requirements without inventorying all input sources (missing sources discovered later invalidate the classification)
+10. Silently resolving ambiguity — when a requirement or constraint can be interpreted multiple ways, picking one interpretation without surfacing it for confirmation is guessing, not engineering. Surface the ambiguity, propose a GUESS, let the stakeholder confirm.
 
 ## Skill Rules
 
@@ -129,10 +172,7 @@ Every artifact references its inputs with exact version numbers. When an input c
 
 4. **When in doubt, start with requirements.** If requirements are not yet structured and traceable, begin with `requirements-decompose`. Everything downstream depends on it.
 
-5. **SE skills and agent-skills coexist.** SE skills can invoke agent-skills inline when needed:
-   - `requirements-decompose` invokes `interview-me` for vague inputs
-   - `architecture-design` invokes `source-driven-development` for IP/standard verification
-   - `design-review` is built on `doubt-driven-development`'s adversarial pattern
+5. **Verification is part of the work.** Every skill includes a verification checklist. A skill is not complete until every checkbox is ticked. "Looks right" is never sufficient — there must be explicit confirmation against each checklist item.
 
 ## Quick Reference
 
@@ -143,16 +183,3 @@ Every artifact references its inputs with exact version numbers. When an input c
 | Document | spec-authoring | Architecture + Requirements → SOD, HW-SW IF Spec, Test Plan |
 | Verify | design-review | Four-lens (HW/SW/Test/System) adversarial review of any SE artifact |
 | Validate | traceability-matrix | Cross-artifact gap analysis: orphans, coverage gaps, action items |
-
-## Interaction with Agent Skills
-
-SE skills are designed to work alongside agent-skills. The relationship:
-
-| SE Skill | Can Invoke (agent-skills) | Relationship |
-|----------|--------------------------|-------------|
-| requirements-decompose | `interview-me` | Clarify vague stakeholder inputs before decomposition |
-| architecture-design | `source-driven-development` | Verify third-party IP, standard protocols against official docs |
-| design-review | `doubt-driven-development` | Philosophical parent — same adversarial fresh-context pattern |
-| spec-authoring | `spec-driven-development` | Complementary — SE spec defines what; software spec defines how in code |
-
-Agent skills are loaded alongside SE skills. When an SE skill needs to clarify, verify, or cross-examine, it invokes the relevant agent skill inline.

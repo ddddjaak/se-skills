@@ -7,5 +7,5 @@
   "license": "MIT",
   "commands": "./.claude/commands",
   "skills": "./skills",
-  "agents": []
+  "agents": "./agents"
 }

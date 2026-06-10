@@ -25,7 +25,7 @@ This skill is `doubt-driven-development` specialized for SE artifacts. It materi
 - The artifact is an early draft the author has not self-reviewed yet (self-review first, then adversarial review)
 - Typos, formatting errors, or mechanical corrections (these do not need four-lens adversarial review)
 - The user explicitly wants speed over thoroughness for a low-risk, single-department artifact
-- Reviewing implementation code (use `doubt-driven-development` or `code-review-and-quality` from agent-skills)
+- Reviewing implementation code (use a code review process, not this design artifact review)
 - Pure information lookup ("does this register address match the datasheet?" — verify directly, don't review)
 
 ## The Process
@@ -296,8 +296,6 @@ A design review report saved to `docs/reviews/[project]-[artifact]-review-[YYYY-
 - **`architecture-design`**: If the review finds architecture-level issues (missing modules, incomplete interfaces, unresolved trade-offs), invoke to redesign the affected areas.
 - **`spec-authoring`**: If the review finds specification issues (missing sections, underspecified interfaces, incomplete test coverage), invoke to regenerate the affected specification sections.
 - **`traceability-matrix`**: After review findings are resolved, re-run traceability to verify that fixes have not broken the traceability chain.
-- **`doubt-driven-development`** (from agent-skills): The philosophical parent. `design-review` is doubt-driven-development specialized for multi-discipline SE artifacts with department-lens reviewers.
-- **`code-review-and-quality`** (from agent-skills): Complementary. `design-review` checks the design artifact; `code-review-and-quality` checks the implementation. Use both, not one in place of the other.
 
 ## Common Rationalizations
 
