@@ -267,3 +267,8 @@ After completing requirements decomposition:
 - [ ] The traceability seed table is populated (Raw Source → System Req ID)
 - [ ] The human has explicitly confirmed the requirements document (not "looks fine," not "sure")
 - [ ] The document is saved to a version-controlled location under `docs/requirements/`
+
+## See Also
+
+- For solution-level requirements review criteria, see `references/solution-requirements-analysis-checklist.md`
+- For software-specific requirements review criteria, see `references/software-requirements-analysis-checklist.md`

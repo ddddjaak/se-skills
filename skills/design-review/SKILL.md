@@ -334,3 +334,11 @@ Before closing the review, confirm:
 - [ ] Review report includes resolution tracking table (initially empty, filled as fixes are applied)
 - [ ] Review report saved to `docs/reviews/`
 - [ ] If fixes were applied, artifact version updated to reflect the change
+
+## See Also
+
+- For requirements-specific review criteria, invoke `requirements-review` skill
+- For code static review criteria, invoke `code-static-review` skill
+- For test plan review criteria, invoke `test-plan-review` skill
+- For test report review criteria, invoke `test-report-review` skill
+- For software release review criteria, invoke `release-review` skill

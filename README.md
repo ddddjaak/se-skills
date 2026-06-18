@@ -13,12 +13,12 @@ Skills 将资深系统工程师在芯片应用项目中所遵循的工作流、�
 | 你在做什么 | 命令 | 核心原则 |
 |-------------------|---------|---------------|
 | 分解原始需求 | `/se-requirements` | 每个需求可追溯、可测试、有归属 |
-| 设计系统架构 | `/se-architecture` | 每个接口精确定义，每个决策有据可查 |
-| 撰写正式规格 | `/se-spec` | 架构 + 需求 → SOD、HW-SW IF Spec、测试方案 |
-| 跨部门评审 | `/se-review` | 四视角对抗式审查（HW/SW/Test/System） |
+| 设计系统架构 | `/se-architecture` | 系统级 → HW/SW 专业架构拆分；每个接口精确定义，每个决策有据可查 |
+| 撰写正式规格和详细设计 | `/se-spec` | 架构 + 需求 → SOD、HW-SW IF Spec、测试方案、模块详细设计 |
+| 多类型产物评审 | `/se-review` | 六种评审类型覆盖全产物：设计、需求、代码、测试计划、测试报告、发布 |
 | 验证可追溯性 | `/se-traceability` | 跨产物差距分析，覆盖率报告 |
 
-技能也会根据你正在做的事情自动激活 — 设计架构会触发 `architecture-design`，需求存在矛盾会触发 `requirements-decompose`，以此类推。
+技能也会根据你正在做的事情自动激活 — 设计软件架构会触发 `software-architecture-design`，需求存在矛盾会触发 `requirements-decompose`，对测试报告有疑问会触发 `test-report-review`，以此类推。
 
 ---
 
@@ -105,9 +105,9 @@ gemini skills install ./se-skills/skills/
 
 ---
 
-## 全部 5 个技能
+## 全部 15 个技能
 
-上述命令是入口点。本包包含 5 个 SE 工作流技能加 1 个 `using-se-skills` 元技能。每个技能都是一个结构化的工作流，包含步骤、验证门禁和反合理化表。你也可以直接引用任何技能。
+上述命令是入口点。本包包含 15 个 SE 工作流技能加 1 个 `using-se-skills` 元技能。每个技能专注于一个场景，包含输入验证门禁、量化指标、步骤流程和反合理化表。你也可以直接引用任何技能。
 
 ### 元技能 — 发现该用哪个技能
 
@@ -123,22 +123,37 @@ gemini skills install ./se-skills/skills/
 
 ### 设计 — 架构方案与模块分解
 
-| 技能 | 功能 | 使用场景 |
-|-------|-------------|----------|
-| [architecture-design](skills/architecture-design/SKILL.md) | 五步流程（分解→接口→约束→权衡→文档）：模块分解、精确接口定义（含时序/错误处理/并发模型）、跨域约束分析、设计决策记录（含被拒绝方案和接受的下行风险） | 系统需求已确认，需要设计模块划分；评估架构替代方案；下游规格撰写发现缺失的架构决策 |
+| 技能 | 领域 | 功能 | 使用场景 |
+|-------|------|-------------|----------|
+| [architecture-design](skills/architecture-design/SKILL.md) | 系统 | 系统级模块分解、跨域接口定义、约束冲突分析、设计决策记录（含被拒绝方案和接受的下行风险） | 系统需求已确认，需设计模块划分；评估架构替代方案；下游设计发现缺失的架构决策 |
+| [software-architecture-design](skills/software-architecture-design/SKILL.md) | 软件 | 系统架构 → 固件模块分解、RTOS 线程模型、IPC 设计、内存预算分配、时序关键数据流分析 | 系统架构已确认，需设计固件线程/ISR 模型和内存布局；评估 RTOS 选型 |
+| [hardware-architecture-design](skills/hardware-architecture-design/SKILL.md) | 硬件 | 系统架构 → 引脚分配、电源域划分、PCB 层叠约束、信号完整性分析、元器件选型决策 | 系统架构已确认，需设计板级硬件；评估元器件替代方案；评审发现引脚冲突或 SI 问题 |
 
-### 文档 — 撰写正式规格
+### 文档 — 撰写正式规格和详细设计
 
-| 技能 | 功能 | 使用场景 |
-|-------|-------------|----------|
-| [spec-authoring](skills/spec-authoring/SKILL.md) | 从架构和需求生成三类正式规格文档：软件概要设计（SOD）、软硬件接口规格（HW-SW IF Spec）、测试方案（Test Plan） | 架构已确认，固件团队需要实现规格；软硬件边界需要明确定义；验证团队需要测试程序 |
+| 技能 | 领域 | 功能 | 使用场景 |
+|-------|------|-------------|----------|
+| [spec-authoring](skills/spec-authoring/SKILL.md) | 系统 | 从架构和需求生成三类系统级规格：软件概要设计（SOD）、软硬件接口规格（HW-SW IF Spec）、测试方案（Test Plan） | 架构已确认，需生成系统级规格文档；软硬件边界需明确定义；验证团队需测试程序 |
+| [software-detailed-design](skills/software-detailed-design/SKILL.md) | 软件 | SW 架构 → 函数签名精确定义、状态机设计、数据结构与共享数据线程安全、错误处理矩阵、资源量化预算 | SW 架构已确认，某固件模块需详细设计文档后再编码；新模块加入现有固件代码库 |
+| [hardware-detailed-design](skills/hardware-detailed-design/SKILL.md) | 硬件 | HW 架构 → 原理图元器件规格（容值/精度/封装/介质/布局约束）、PCB 布线规则、PDN 设计（Z_target 计算）、热分析（T_j 计算） | HW 架构已确认，原理图即将开始；准备 PCB 布局约束；评审发现硬件约束欠规格 |
+| [algorithm-design](skills/algorithm-design/SKILL.md) | 算法 | 算法需求 → 信号处理/控制回路/标定程序/滤波器设计文档，含数学模型、量化位宽分析、时序预算 | 算法需求已明确（如 ADC 采样处理、电机 FOC 控制、传感器融合）；算法需独立于固件模块进行设计 |
 
 ### 验证 — 发布前的质量门禁
 
+| 技能 | 领域 | 功能 | 使用场景 |
+|-------|------|-------------|----------|
+| [design-review](skills/design-review/SKILL.md) | 系统 | 四视角（HW/SW/Test/System）对抗式审查，每位审查者独立考察同一份产物，交叉比对发现分歧。纯流程技能 — 不挂载审查清单 | 任何 SE 产物在分发前需跨部门评审；审查同事的架构或规格设计；里程碑前确认设计质量 |
+| [requirements-review](skills/requirements-review/SKILL.md) | 需求 | 基于解决方案和软件需求分析审查清单，对需求文档进行逐项审查，输出分级问题报告 | 需求文档完成，需正式审查后再进入架构设计；需求变更后需重新验证完整性和一致性 |
+| [code-static-review](skills/code-static-review/SKILL.md) | 软件 | 依据公司编码标准审查清单（6 类：代码层次/布局/注释/命名/设计/寄存器定义），对源码进行逐项合规检查 | 代码提交前需编码规范合规检查；模块代码冻结前需正式静态审查；遗留代码纳入当前编码标准 |
+| [test-plan-review](skills/test-plan-review/SKILL.md) | 测试 | 基于测试方案和测试策略审查清单，验证测试方案的完整性、可追溯性和合规性 | 测试方案完成，需正式审查后再执行测试；需求变更后需验证测试方案是否覆盖新需求 |
+| [test-report-review](skills/test-report-review/SKILL.md) | 测试 | 基于三项审查清单，验证测试报告的正确性、完整性和可追溯性 — 不仅看通过率，更看覆盖率和未测项目 | 测试完成、报告生成后需正式评审；发布前需确认测试报告无未解决的阻断项 |
+| [release-review](skills/release-review/SKILL.md) | 发布 | 发布包就绪审查 — 盘点全部产物、版本一致性校验、对照发布审查清单逐项评估，输出分级问题报告 | 发布包（固件/发布说明/版本清单/测试报告）已组装，需对外分发前评审；里程碑发布签核 |
+
+### 验证 — 跨产物可追溯性
+
 | 技能 | 功能 | 使用场景 |
 |-------|-------------|----------|
-| [design-review](skills/design-review/SKILL.md) | 四视角（HW/SW/Test/System）对抗式审查，每一位审查者独立考察同一份产物，交叉比对发现分歧。包含角色指派、逐章节审查、差异分类（问题/建议/观察）、评审报告生成 | 任何 SE 产物在分发前需要跨部门评审；审查同事的架构设计；里程碑前确认设计质量 |
-| [traceability-matrix](skills/traceability-matrix/SKILL.md) | 跨产物可追溯性分析 — 需求→设计→测试的覆盖率缺口检测、孤立产物识别、追溯报告生成 | 里程碑评审前验证覆盖率；检测无测试覆盖的需求；发现无需求来源的设计元素 |
+| [traceability-matrix](skills/traceability-matrix/SKILL.md) | 跨产物可追溯性分析 — 需求→设计→测试的覆盖率缺口检测、孤立产物识别、过度覆盖发现、追溯报告生成 | 每个产物产出后立即验证覆盖率；里程碑评审前生成正式追溯证据；需求变更时评估影响范围 |
 
 ---
 
@@ -183,10 +198,11 @@ gemini skills install ./se-skills/skills/
 **核心设计选择：**
 
 - **是流程，不是散文。** 技能是 agent 遵循的工作流，不是让他们阅读的参考文档。每个技能都有步骤、检查点和退出标准。
+- **一个技能 = 一个场景。** 15 个技能按职责精确拆分，每个技能专注一个场景（如 `software-detailed-design` 只设计一个固件模块），上下文干净、输入文档最多 2-3 项。
 - **反合理化。** 每个技能都包含一个常见借口表，列出 agent 用来跳过步骤的借口（例如 "需求大概清楚了，直接开始设计吧"），并附有文档化的反驳。
 - **验证不容妥协。** 每个技能都以证据要求结尾 — 冲突解决日志、接口完整性检查清单、人类确认门禁。"看起来没问题" 永远不够。
-- **渐进式披露。** `SKILL.md` 是入口点。每个技能控制在 500 行以内，深入细节在流程步骤中展开，不依赖外部参考文件。
-- **独立可组合。** 五个技能可以端到端串联（需求→架构→规格→评审→追溯），也可以独立使用 — 单跑 `design-review` 审查同事的产物，或单跑 `traceability-matrix` 做里程碑前的覆盖率检查。
+- **渐进式披露。** `SKILL.md` 是入口点，每个控制在 500 行以内。详细审查清单放在 `references/` 目录（21 项 SE 审查清单），由技能通过 "See Also" 按需加载，不撑爆上下文。
+- **独立可组合。** 技能可以端到端串联（需求→架构→详细设计→评审→追溯），也可以独立使用 — 单跑 `design-review` 审查同事的产物，或单跑 `traceability-matrix` 做里程碑前的覆盖率检查。
 
 ---
 
@@ -194,14 +210,25 @@ gemini skills install ./se-skills/skills/
 
 ```
 se-skills/
-├── skills/                            # 5 个 SE 工作流技能 + 1 个元技能
+├── skills/                            # 15 个 SE 工作流技能 + 1 个元技能
 │   ├── using-se-skills/               #   元技能：如何使用本包
 │   ├── requirements-decompose/        #   定义：原始输入 → 结构化需求
-│   ├── architecture-design/           #   设计：需求 → 架构方案
-│   ├── spec-authoring/                #   文档：架构 → 正式规格
+│   ├── requirements-review/           #   验证：需求文档清单审查
+│   ├── architecture-design/           #   设计：系统级模块分解
+│   ├── software-architecture-design/  #   设计：固件线程模型、IPC、内存预算
+│   ├── hardware-architecture-design/  #   设计：引脚分配、电源域、SI 分析
+│   ├── spec-authoring/                #   文档：SOD、HW-SW IF Spec、Test Plan
+│   ├── software-detailed-design/      #   文档：函数签名、状态机、错误处理
+│   ├── hardware-detailed-design/      #   文档：原理图约束、PDN、热分析
+│   ├── algorithm-design/              #   文档：信号处理、控制回路、滤波器
 │   ├── design-review/                 #   验证：四视角对抗式评审
+│   ├── code-static-review/            #   验证：编码规范静态审查
+│   ├── test-plan-review/              #   验证：测试方案完整性审查
+│   ├── test-report-review/            #   验证：测试报告正确性审查
+│   ├── release-review/                #   验证：发布就绪审查
 │   └── traceability-matrix/           #   验证：跨产物可追溯性分析
 ├── agents/                            # 5 个专业审查角色
+├── references/                        # 21 项 SE 审查清单（按需加载）
 ├── .github/                           # Issue/PR 模板
 ├── .claude-plugin/                    # 插件清单
 │   ├── plugin.json
@@ -228,13 +255,27 @@ AI 编程助手默认走最短路径 — 在系统工程师的工作中，这往
 
 芯片应用项目中的错误发现越晚，修复成本越高 — 需求阶段的歧义用一次对话就能澄清，集成阶段才发现架构假设错误则需要数周返工。
 
-每个技能都编码了资深 SE 来之不易的工程判断：
+每个技能都编码了资深 SE 来之不易的工程判断。15 个技能按职责精确拆分，每个技能专注于一个场景，上下文窗口干净、引用清单精准：
 
 - **需求分解** — 每个需求必须可量化、可测试、有归属。模糊需求用 GUESS 模式（提出量化解释 + 推理 → 让干系人确认/纠正），比开放式提问更快更有效。
-- **架构设计** — 每个接口必须定义数据格式、时序边界、错误处理和并发模型。每个非平凡决策必须记录被拒绝的替代方案和接受的下行风险。
-- **规格撰写** — 遵循 "Numbers, Not Adjectives"（数字，而非形容词）原则。SOD 中的每个模块描述都追溯到架构接口 ID。测试方案中的每个测试用例都追溯到需求 ID。
-- **设计评审** — 一人评审自己的产物会看到自己期望看到的东西。四视角对抗式评审（HW/SW/Test/System）确保每个视角发现其他视角的盲区。
+- **架构设计** — 系统级架构分解为三大专业方向：`architecture-design`（系统级模块划分）、`software-architecture-design`（固件线程/ISR 模型、内存预算、IPC 设计）、`hardware-architecture-design`（引脚分配、电源域、SI 分析、元器件选型）。每个专业方向只读自己所需的输入文档，不加载全项目上下文。
+- **详细设计与规格** — 四大产出物方向：`spec-authoring`（SOD/HW-SW IF/Test Plan 系统级规格）、`software-detailed-design`（函数签名/状态机/错误处理矩阵/资源量化）、`hardware-detailed-design`（原理图约束/PDN 数学推导/热分析 T_j 计算）、`algorithm-design`（信号处理/控制回路/标定程序）。
+- **多类型评审** — 六种评审覆盖全产物类型：`design-review`（四视角对抗式——纯流程）、`requirements-review`（需求文档清单审查）、`code-static-review`（编码规范合规）、`test-plan-review`（测试方案完整性）、`test-report-review`（测试报告正确性）、`release-review`（发布包就绪审查）。每个评审技能只加载自己的审查清单，不加载全量 21 项清单。
 - **可追溯性矩阵** — 在全链条上运行，而不只是在最后。每个产物产出后立即检查覆盖率，晚期发现的缺口修复成本呈指数增长。
+
+### 防幻觉设计
+
+每个技能都内置了减少 AI 幻觉的机制：
+
+| 机制 | 体现 |
+|------|------|
+| **输入门** | 每个技能的 Step 1 强制验证输入产物存在且版本对齐，不满足则停止 |
+| **引用追溯** | 每个声明、函数、引脚、约束必须引用一个 ID（REQ-XXX、IF-XXX、CON-XXX） |
+| **量化一切** | "≤ 500μs" 而非 "fast"；"≤ 2W" 而非 "low power"；T_j 必须写计算公式 |
+| **停-问门** | "If uncertain, surface and stop — do NOT guess" 在每个技能的关键决策点 |
+| **上下文边界** | 每个技能明确声明只读什么、不读什么（如 `software-detailed-design` 只读 SW 架构文档，不读硬件规格、测试方案） |
+| **TBD 管理** | 每个 TBD 必须有 owner + due date，不接受裸 TBD |
+| **版本检查** | 每个技能交叉验证输入产物版本一致性，版本偏移作为 CRITICAL 上报 |
 
 这些不是泛泛的提示词 — 它们是那种有见地的、以流程为导向的工作流，能够区分经过工程验证的系统设计和拍脑袋的原型方案。
 

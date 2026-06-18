@@ -421,3 +421,7 @@ Before finalizing, confirm:
 - [ ] All TBDs have owners and due dates
 - [ ] The human has explicitly confirmed each specification document
 - [ ] Documents saved under `docs/specs/`
+
+## See Also
+
+- For solution specification review criteria, see `references/solution-specification-checklist.md`

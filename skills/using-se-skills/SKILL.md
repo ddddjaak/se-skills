@@ -26,7 +26,7 @@ This meta-skill helps you discover and apply the right skill for your current SE
 
 ## Skill Discovery
 
-When an SE task arrives, identify the phase and apply the corresponding skill:
+When an SE task arrives, identify the phase and domain, then apply the corresponding skill:
 
 ```
 SE Task arrives
@@ -34,16 +34,24 @@ SE Task arrives
     ├── Raw requirements exist as scattered docs? ──→ requirements-decompose
     │   (PRD + Datasheet + Standards + Customer Spec)
     │
-    ├── Have structured requirements, need architecture? ──→ architecture-design
-    │   (Module decomposition, interface specs, constraints, trade-offs)
+    ├── Have structured requirements, need architecture?
+    │   ├── System-level module breakdown? ──→ architecture-design
+    │   ├── Firmware/software architecture? ──→ software-architecture-design
+    │   └── Hardware architecture? ──→ hardware-architecture-design
     │
-    ├── Architecture is confirmed, need formal specs? ──→ spec-authoring
-    │   ├── Firmware team needs implementation spec? ──→ Software Outline Design (软件概要设计)
-    │   ├── HW-SW boundary needs definition? ──→ HW-SW Interface Spec (软硬件接口规格)
-    │   └── Validation team needs test procedures? ──→ Test Plan (测试方案)
+    ├── Architecture confirmed, need detailed design?
+    │   ├── System-level spec (SOD, HW-SW IF, Test Plan)? ──→ spec-authoring
+    │   ├── Firmware module detailed design? ──→ software-detailed-design
+    │   ├── Hardware detailed design? ──→ hardware-detailed-design
+    │   └── Algorithm design? ──→ algorithm-design
     │
-    ├── An artifact is ready for cross-dept review? ──→ design-review
-    │   (Four-lens adversarial review: HW, SW, Test, System)
+    ├── An artifact is ready for review?
+    │   ├── Architecture or spec artifact (4-lens review)? ──→ design-review
+    │   ├── Requirements document? ──→ requirements-review
+    │   ├── Source code (static analysis)? ──→ code-static-review
+    │   ├── Test plan document? ──→ test-plan-review
+    │   ├── Test report document? ──→ test-report-review
+    │   └── Software release package? ──→ release-review
     │
     ├── Need to verify cross-artifact integrity? ──→ traceability-matrix
     │   (Req → Design → Test gap analysis and coverage report)
@@ -66,23 +74,56 @@ For a complete chip application project, the typical skill sequence is:
                                  with domain classification, ownership assignment,
                                  conflict resolution, and traceability IDs
 
-2. architecture-design        → Requirements → Module decomposition,
-                                 interface definitions, constraint analysis,
+2. architecture-design        → System-level module decomposition,
+    (system)                     interface definitions, constraint analysis,
                                  trade-off decisions
 
-3. spec-authoring             → Architecture + Requirements → Formal specs:
-                                 SOD, HW-SW IF Spec, Test Plan
+3a. software-architecture-design → System arch → Firmware module breakdown,
+                                    RTOS thread model, memory budget, SW interfaces
 
-4. design-review              → Adversarial cross-department review through
-                                 four lenses before artifact distribution
+3b. hardware-architecture-design → System arch → Pin assignments, voltage domains,
+                                    PCB constraints, component selection
 
-5. traceability-matrix        → Cross-artifact validation:
+4a. spec-authoring            → System arch + Requirements → SOD, HW-SW IF Spec, Test Plan
+
+4b. software-detailed-design  → SW architecture → Function signatures, data structures,
+                                    state machines, error handling per module
+
+4c. hardware-detailed-design  → HW architecture → Schematic guidance, BOM constraints,
+                                    PCB layout rules, PDN design
+
+4d. algorithm-design          → Algorithm requirements → Signal processing, control loops,
+                                    calibration routines, filter design
+
+5a. design-review             → 4-lens adversarial review of architecture or spec artifacts
+
+5b. requirements-review       → Checklist-based review of requirements documents
+
+5c. code-static-review        → Static analysis of source code against coding standards
+
+5d. test-plan-review          → Completeness and compliance review of test plans
+
+5e. test-report-review        → Review of test reports for correctness and traceability
+
+5f. release-review            → Release readiness review (binaries, notes, test reports)
+
+6. traceability-matrix        → Cross-artifact validation:
                                  coverage gaps, orphans, action items
 ```
 
 **Note:** `traceability-matrix` can (and should) be run after every artifact is produced, not just at the end. It is the quality check that runs across the chain.
 
-**Not every task needs every skill.** A standalone design review only requires `design-review`. A gap analysis before milestone only requires `traceability-matrix`. A new feature from scratch might require all five in sequence. The chain is a map, not a mandatory route — use the skills that match your current task.
+**Not every task needs every skill.** A standalone architecture review only requires `design-review`. A test report check before release only requires `test-report-review`. A gap analysis before milestone only requires `traceability-matrix`. The chain is a map, not a mandatory route — use the skills that match your current task.
+
+**Skill routing by slash command:**
+
+| Command | Routes to |
+|---------|----------|
+| `/se-requirements` | `requirements-decompose` |
+| `/se-architecture` | `architecture-design` → `software-architecture-design` or `hardware-architecture-design` (based on domain) |
+| `/se-spec` | `spec-authoring` → `software-detailed-design`, `hardware-detailed-design`, or `algorithm-design` (based on artifact type) |
+| `/se-review` | `design-review`, `requirements-review`, `code-static-review`, `test-plan-review`, `test-report-review`, or `release-review` (based on artifact type) |
+| `/se-traceability` | `traceability-matrix` |
 
 ## Core Operating Behaviors
 
@@ -174,12 +215,59 @@ Your job is surgical precision on the task at hand, not unsolicited renovation o
 
 5. **Verification is part of the work.** Every skill includes a verification checklist. A skill is not complete until every checkbox is ticked. "Looks right" is never sufficient — there must be explicit confirmation against each checklist item.
 
+## Common Rationalizations
+
+| Rationalization | Reality |
+|---|---|
+| "I already know which skill to use — I don't need a discovery flow" | The discovery flow exists because the number of skills (15+) exceeds what one person can keep in mind. Even the skill authors use the flow to confirm they are not missing a more specific skill for the task. |
+| "The SE chain is too many steps for a small task" | The chain is a map, not a mandatory route. A small task may need only one skill. The chain shows the full landscape so you know what you are skipping — and why. |
+| "I'll just use architecture-design for everything — it's the closest" | Architecture-design handles system-level module decomposition. It does not cover HW pin assignments, software data structures, algorithm math, or release readiness. Using the wrong skill means missing the right checklist — and the right verification gate. |
+| "Meta-skills don't need to follow the same format as regular skills" | Meta-skills are discovered and invoked by agents the same way as any other skill. If the format diverges, the agent mis-handles it. Consistency across all skills is how the discovery machinery works reliably. |
+| "The routing table is for humans — agents can figure it out from context" | Context is ambiguous. "Review the test plan" could mean `test-plan-review` (correct) or `design-review` (wrong artifact type). The routing table removes ambiguity — exact match, not probabilistic guess. |
+| "I can skip verification — this is just routing" | Routing to the wrong skill is a silent error. If the meta-skill routes incorrectly, the entire downstream workflow wastes time on the wrong process. Verification catches misrouting before work begins. |
+
+## Red Flags
+
+- Three or more skills invoked without consulting the discovery flowchart (the agent is guessing, not routing)
+- Routing to a skill that does not match the artifact type (e.g., routing a test plan to `design-review`)
+- Skipping `requirements-decompose` and jumping directly to `architecture-design` with raw, unstructured inputs
+- Accepting "we'll figure out the skill sequence later" — later means after work has started in the wrong skill
+- Running a review skill without first confirming which artifact type is under review
+- Invoking `traceability-matrix` without version-pinning all input artifacts first
+- Using `architecture-design` for hardware-specific design when `hardware-architecture-design` exists
+- Using `architecture-design` for software-specific design when `software-architecture-design` exists
+- Accepting a stakeholder's vague requirements without surfacing ambiguity before proceeding to `requirements-decompose`
+- Routing to a skill whose prerequisites are not satisfied (e.g., `spec-authoring` without system architecture)
+
+## Verification
+
+Before completing the SE skill discovery:
+
+- [ ] The user's task has been classified into exactly one phase (Define / Design / Document / Verify / Validate)
+- [ ] The correct skill for the task has been identified via the Skill Discovery flowchart
+- [ ] The skill's prerequisites are satisfied (upstream artifacts exist with confirmed versions)
+- [ ] If the task spans multiple phases, the correct skill chain has been identified and communicated
+- [ ] If the artifact type is ambiguous, the user was asked to clarify before routing
+- [ ] The routed skill matches the slash command mapping table (if invoked via slash command)
+- [ ] No shortcuts taken — the user was not routed to a generic skill when a specialized one exists
+- [ ] The "When NOT to use" section of the target skill was read and confirmed not to apply
+
 ## Quick Reference
 
 | Phase | Skill | One-Line Summary |
 |-------|-------|-----------------|
-| Define | requirements-decompose | Raw inputs → structured, traceable system requirements with ownership |
-| Design | architecture-design | Requirements → modules, interfaces, constraints, trade-off decisions |
-| Document | spec-authoring | Architecture + Requirements → SOD, HW-SW IF Spec, Test Plan |
-| Verify | design-review | Four-lens (HW/SW/Test/System) adversarial review of any SE artifact |
-| Validate | traceability-matrix | Cross-artifact gap analysis: orphans, coverage gaps, action items |
+| Define | `requirements-decompose` | Raw inputs → structured, traceable system requirements with ownership |
+| Design | `architecture-design` | Requirements → system-level module decomposition, interfaces, constraints, trade-offs |
+| Design | `software-architecture-design` | System arch → firmware module breakdown, RTOS model, memory budget, SW interfaces |
+| Design | `hardware-architecture-design` | System arch → pin assignments, voltage domains, PCB constraints, component selection |
+| Document | `spec-authoring` | System arch + Requirements → SOD, HW-SW IF Spec, Test Plan |
+| Document | `software-detailed-design` | SW architecture → function signatures, data structures, state machines, error handling |
+| Document | `hardware-detailed-design` | HW architecture → schematic guidance, BOM constraints, PCB layout rules, PDN |
+| Document | `algorithm-design` | Algorithm requirements → signal processing, control loops, calibration, filter design |
+| Verify | `design-review` | Four-lens (HW/SW/Test/System) adversarial review of architecture or spec artifacts |
+| Verify | `requirements-review` | Checklist-based focused review of requirements documents |
+| Verify | `code-static-review` | Static analysis of source code against company coding standards |
+| Verify | `test-plan-review` | Completeness and compliance review of test plan documents |
+| Verify | `test-report-review` | Review of test reports for correctness, completeness, and traceability |
+| Verify | `release-review` | Release readiness review (binaries, release notes, version manifest, test reports) |
+| Validate | `traceability-matrix` | Cross-artifact gap analysis: orphans, coverage gaps, action items |

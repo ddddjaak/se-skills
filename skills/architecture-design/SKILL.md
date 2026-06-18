@@ -272,3 +272,7 @@ Before handing off to spec-authoring, confirm:
 - [ ] Open items have owners and due dates (not just "TBD")
 - [ ] The human has explicitly confirmed the architecture document
 - [ ] The document is saved to a version-controlled location under `docs/architecture/`
+
+## See Also
+
+- For system-level architecture design review criteria, see `references/solution-architecture-design-checklist.md`
