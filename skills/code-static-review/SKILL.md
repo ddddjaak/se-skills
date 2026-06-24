@@ -237,6 +237,18 @@ Before closing the review, confirm:
 - [ ] Report saved to `docs/reviews/` with the prescribed naming convention
 - [ ] Review conclusion states a clear next step (fix, escalate, or proceed)
 
+## After This Skill
+
+Once the static review report is saved to `docs/reviews/`:
+
+| Next Step | Skill | What It Produces |
+|-----------|-------|-----------------|
+| **If findings require fixes** | (developer) | Fix the code issues identified in the review, then re-run |
+| **If code is clean** | `traceability-matrix` | Cross-artifact validation of the full chain |
+| Further reviews | `test-plan-review` / `test-report-review` | Continue with test artifact reviews if relevant |
+
+
+
 ## See Also
 
 - `design-review` — For adversarial, cross-department review of SE design artifacts (requirements, architecture, specifications). Use design-review for design correctness; use code-static-review for coding standard compliance.

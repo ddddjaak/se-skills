@@ -278,6 +278,18 @@ Before closing the review, confirm:
 - [ ] Resolution tracking table included (empty, to be filled by author as items are resolved)
 - [ ] Only the target requirements document and checklist files were read — no architecture, spec, test, or other downstream documents pulled in
 
+## After This Skill
+
+Once the requirements review report is saved to `docs/reviews/`:
+
+| Next Step | Skill | What It Produces |
+|-----------|-------|-----------------|
+| **If requirements are clean** | `architecture-design` | Proceed to system-level module decomposition and interface design |
+| **If findings require fixes** | `requirements-decompose` | Re-decompose requirements to address gaps identified in review |
+| Quality check | `traceability-matrix` | Verify requirements completeness and traceability |
+
+
+
 ## See Also
 
 - `references/solution-requirements-analysis-checklist.md` — Solution-level requirements review checklist (CIC1–RCC2)

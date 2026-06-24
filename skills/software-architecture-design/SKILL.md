@@ -315,6 +315,18 @@ Before handing off to software-detailed-design, confirm:
 - [ ] The human has explicitly confirmed the software architecture document
 - [ ] The document is saved to a version-controlled location under `docs/architecture/`
 
+## After This Skill
+
+Once software architecture is confirmed and saved to `docs/architecture/`:
+
+| Next Step | Skill | What It Produces |
+|-----------|-------|-----------------|
+| **Natural next** | `software-detailed-design` | Function signatures, data structures, state machines per firmware module |
+| System integration | `spec-authoring` | Generate Software Outline Design (SOD) for the firmware team |
+| Quality check | `traceability-matrix` | Verify requirements → SW architecture traceability |
+
+
+
 ## See Also
 
 - For software architecture design review criteria, see `references/software-architecture-design-checklist.md`

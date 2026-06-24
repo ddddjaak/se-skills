@@ -12,6 +12,110 @@ agents/              → Reusable agent personas (system-architect, hw-domain-ex
 references/          → Detailed SE review checklists (loaded on demand via skill "See Also" sections)
 ```
 
+## SE Pipeline Mode — AUTOMATIC (Critical)
+
+**This project contains 16 SE workflow skills organized in a Define → Design → Document → Verify → Validate chain.** When a user expresses SE work intent without naming a specific skill name, **you MUST enter Pipeline Mode automatically**. Do NOT ask "which skill do you want to use?" or dump a list of 16 skill names. Instead, guide the user through the workflow by detecting their current phase and presenting logical next-step options.
+
+### Trigger Keywords
+
+Any of these in the user's message → enter Pipeline Mode (unless a specific skill name like `requirements-decompose` is explicitly stated):
+
+- **Chinese**: 方案, 需求, 架构, 详细设计, 规格, 审查, 测试方案, 测试报告, 追溯, 发布, 概要设计, 接口规格, 芯片, 产品, 评审, 代码审查, 静态检查
+- **English**: solution, requirements, architecture, design, specification, review, test plan, test report, traceability, release, chip, product, SoC, firmware, schematic
+- **Combined patterns**: "I have a PRD", "design a temperature sensor", "review this architecture", "check test coverage", "prepare for release"
+
+### Phase Detection (scan docs/ before responding)
+
+**Step 1 — Check directory structure.** Use Glob (`docs/*/`) to detect which artifact directories exist:
+
+```
+docs/requirements/   exists → Define phase at minimum (check content quality below)
+docs/architecture/   exists → Design phase at minimum
+docs/spec/           exists → Document phase at minimum
+docs/reviews/        exists → Verify phase has run
+docs/traceability/   exists → Validate phase has run
+```
+
+**Step 2 — Verify content quality (not just directory existence).** A directory being present does NOT mean the phase is complete. Check:
+
+| Directory | Quality Check | How to Verify |
+|-----------|--------------|---------------|
+| `docs/requirements/` | Contains .md files with REQ-XXX IDs | Grep for `REQ-` in the directory |
+| `docs/architecture/` | Contains .md files with MOD-XXX or IF-XXX IDs | Grep for `MOD-\|IF-` in the directory |
+| `docs/spec/` | Contains .md files with spec content (not placeholder) | Check file size > 500 bytes |
+| `docs/reviews/` | Contains review report .md files with findings | Grep for `## Findings` or `## Review Report` |
+| `docs/traceability/` | Contains traceability matrix .md file | Check for `docs/traceability/*.md` |
+
+**Step 3 — Determine true phase status:**
+
+| Condition | Phase Status | What to offer |
+|-----------|-------------|---------------|
+| No `docs/requirements/` dir | **Define — not started** | Only `requirements-decompose` |
+| `docs/requirements/` exists but empty or no REQ-XXX IDs | **Define — in progress (incomplete)** | Resume `requirements-decompose` or start fresh |
+| `docs/requirements/` has REQ-XXX IDs, no `docs/architecture/` | **Design — ready to start** | Architecture options (system / SW / HW) |
+| `docs/architecture/` exists but no MOD-XXX/IF-XXX IDs | **Design — in progress (incomplete)** | Resume architecture skill or review existing |
+| `docs/architecture/` has IDs, no `docs/spec/` | **Document — ready to start** | Spec authoring options |
+| `docs/spec/` has content (files > 500B) | **Verify — ready to start** | Review options matching artifact type present |
+| `docs/reviews/` has review reports | **Validate** | `traceability-matrix` |
+
+### Option Presentation Format
+
+Present exactly 2-4 numbered options. Each option includes:
+1. Number
+2. What it produces (outcome — user cares about this)
+3. Skill name in parentheses (for traceability)
+
+**Example for Design phase:**
+```
+Based on your requirements document, the next step is architecture design. Which level?
+
+1. System-level module decomposition — modules, interfaces, constraints, trade-offs (architecture-design)
+2. Software/firmware architecture — RTOS threads, memory budget, IPC, data flows (software-architecture-design)
+3. Hardware architecture — pin assignments, voltage domains, PCB constraints (hardware-architecture-design)
+4. Something else — tell me what you need
+```
+
+**Example for Verify phase (when docs/spec/ exists):**
+```
+Your specification is ready. What would you like to review?
+
+1. Cross-department adversarial review — HW/SW/Test/System lenses (design-review)
+2. Requirements document review — checklist-based completeness check (requirements-review)
+3. Source code static analysis — coding standard compliance (code-static-review)
+4. Something else — tell me what artifact you want reviewed
+```
+
+### Execution Protocol
+
+1. **Detect** the phase:
+   - First, check if `docs/versions.json` exists — if so, use it as the authoritative phase state
+   - Otherwise, scan `docs/` directories (use Glob: `docs/*/`) and verify content quality per the quality checks above
+   - Distinguish between "phase not started", "phase in progress (incomplete)", and "phase complete"
+2. **Present** 2-4 numbered options in the format above — always include "Something else" as the last option
+3. **Execute** the chosen skill via the Skill tool with the fully-qualified name (e.g., `se-skills:requirements-decompose`)
+4. **Record** — after the skill completes, update `docs/versions.json`:
+   - Add the produced file path to the artifact's `files` array
+   - Set `status` to `produced`
+   - Update `pipeline.last_updated` and `pipeline.current_phase`
+   - Check off the relevant `phase_checkpoints` entry
+5. **Loop** — return to step 1: re-scan state, present the next logical options
+6. **Stop** when the user says "done", "stop", or when `traceability-matrix` has been run and `phase_checkpoints.validate_complete` is true
+
+### Cross-Session Resume
+
+When starting a new session, check `docs/versions.json` first:
+- If it exists and has `produced` artifacts → resume from the highest completed phase; present the next logical options
+- If it does not exist or has no produced artifacts → run full phase detection from directory scan
+- If the user mentions a specific artifact → cross-reference against `versions.json` to determine which phase they are in
+
+### Never (Pipeline Anti-Patterns)
+
+- ❌ Ask "which of these 16 skills do you want?" — overwhelming and unhelpful
+- ❌ Say "use `requirements-decompose` for requirements" — the user doesn't need to know skill names
+- ❌ Skip phase detection — always check `docs/` first
+- ❌ Jump downstream when upstream artifacts are missing — if `docs/requirements/` is empty, do NOT offer architecture design
+- ❌ Run multiple skills in parallel without asking — each phase gates on the previous one's output
+
 ## Skills by Phase
 
 | Phase | Skill | Domain | Description |

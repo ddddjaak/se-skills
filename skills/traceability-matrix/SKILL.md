@@ -295,3 +295,15 @@ Before closing the traceability analysis, confirm:
 - [ ] All action items have owners and due dates
 - [ ] Report includes explicit waiver section for any gaps that are intentionally accepted
 - [ ] Report saved to `docs/traceability/`
+
+## After This Skill
+
+Traceability is the final phase of the SE workflow. Once validated:
+
+| If | Then |
+|----|------|
+| **Gaps found** | Re-run the relevant upstream skill (`requirements-decompose`, `architecture-design`, `spec-authoring`, etc.) to fill gaps, then re-run `traceability-matrix` to verify closure |
+| **All gaps resolved** | The SE artifact chain is complete and verified — all artifacts trace from Raw Requirements → System Reqs → Design Elements → Test Cases |
+| **Scope changed** | Re-run `traceability-matrix` for impact analysis — it will surface all affected artifacts from a single requirement ID change |
+
+**Pipeline mode**: This is the final checkpoint. The conductor will report the chain status and offer to re-run any upstream skill needed to close remaining gaps.

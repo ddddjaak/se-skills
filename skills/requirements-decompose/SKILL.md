@@ -268,6 +268,19 @@ After completing requirements decomposition:
 - [ ] The human has explicitly confirmed the requirements document (not "looks fine," not "sure")
 - [ ] The document is saved to a version-controlled location under `docs/requirements/`
 
+## After This Skill
+
+Once requirements are decomposed, verified, and saved to `docs/requirements/`:
+
+| Next Step | Skill | What It Produces |
+|-----------|-------|-----------------|
+| **Natural next** | `architecture-design` | System-level module decomposition, interfaces, constraints, trade-offs |
+| HW-first path | `hardware-architecture-design` | If HW constraints dominate and you need pin assignments / power tree first |
+| SW-first path | `software-architecture-design` | If firmware architecture is the primary design concern |
+| Quality check | `traceability-matrix` | Run anytime to verify requirement coverage — catches gaps early |
+
+**Pipeline mode**: After this skill completes, the conductor will detect `docs/requirements/` and offer Design-phase options automatically.
+
 ## See Also
 
 - For solution-level requirements review criteria, see `references/solution-requirements-analysis-checklist.md`

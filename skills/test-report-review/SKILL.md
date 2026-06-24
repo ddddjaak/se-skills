@@ -262,6 +262,18 @@ Before closing the review, confirm:
 - **`design-review`**: If the test report reveals a pattern of failures that suggest a design issue (not a test execution issue), run design-review on the affected architecture area.
 - **All upstream skills**: A test report review that finds criteria violations or coverage gaps may trigger rework in design, spec, or test planning phases.
 
+## After This Skill
+
+Once the test report review is saved to `docs/reviews/`:
+
+| Next Step | Skill | What It Produces |
+|-----------|-------|-----------------|
+| **If all tests pass** | `release-review` | Proceed to release readiness review |
+| **If findings require fixes** | (upstream skill) | Address test failures and re-execute affected test cases |
+| **Final validation** | `traceability-matrix` | Verify complete REQ→TEST→REPORT chain with pass/fail traceability |
+
+
+
 ## See Also
 
 - `references/solution-test-report-checklist.md` — Solution-level test report checklist (CIC, BIC, RTC, RNC, RCC)

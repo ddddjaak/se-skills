@@ -24,6 +24,93 @@ This meta-skill helps you discover and apply the right skill for your current SE
 - You already know exactly which skill to invoke (just invoke it directly)
 - The task is not SE-related (e.g., pure software implementation, hardware design, mechanical engineering)
 
+## Pipeline Conduction (Automatic Phase Detection)
+
+**This is the conductor.** When invoked (either explicitly or via CLAUDE.md Pipeline Mode), you do not just discover one skill — you guide the user through the entire SE workflow, one phase at a time. After each skill completes, you return here to present the next logical step.
+
+### Phase Detection Protocol
+
+Before responding, scan `docs/` with Glob (`docs/*/`). The presence of artifact directories determines the current phase:
+
+| Artifacts Present | Phase | Status |
+|-------------------|-------|--------|
+| (none) | **Define** | Start here |
+| `docs/requirements/` | **Design** | Requirements ready, need architecture |
+| `docs/architecture/` | **Document** | Architecture ready, need specs |
+| `docs/spec/` | **Verify** | Specs ready, need review |
+| `docs/reviews/` | **Validate** | Reviews done, need cross-check |
+
+### Option Generation by Phase
+
+**Define Phase** (no `docs/requirements/`):
+```
+Your project is at the starting point. The first step:
+
+1. Requirements decomposition — transform PRD/datasheet/standards into structured, traceable requirements (requirements-decompose)
+2. Skip requirements — I already have structured requirements (proceed to Design phase)
+3. Something else — tell me what you need
+```
+
+**Design Phase** (has `docs/requirements/`, no `docs/architecture/`):
+```
+Requirements are ready. Next: architecture design. Which level?
+
+1. System-level architecture — module decomposition, interfaces, constraints, trade-offs (architecture-design)
+2. Software/firmware architecture — RTOS threads, memory budget, IPC design (software-architecture-design)
+3. Hardware architecture — pin assignments, voltage domains, PCB constraints (hardware-architecture-design)
+4. Something else
+```
+
+**Document Phase** (has `docs/architecture/`, no `docs/spec/`):
+```
+Architecture is defined. Next: formal specification. Which artifact?
+
+1. System-level specifications — SOD, HW-SW IF Spec, Test Plan (spec-authoring)
+2. Software detailed design — function signatures, state machines, error handling (software-detailed-design)
+3. Hardware detailed design — schematic guidance, PCB rules, PDN design (hardware-detailed-design)
+4. Algorithm detailed design — signal processing, control loops, filter design (algorithm-design)
+5. Something else
+```
+
+**Verify Phase** (has `docs/spec/`):
+```
+Specifications are ready for review. Which artifact?
+
+1. Cross-department adversarial review — HW/SW/Test/System four-lens (design-review)
+2. Requirements document review — checklist-based completeness (requirements-review)
+3. Source code static analysis — coding standards compliance (code-static-review)
+4. Something else
+```
+
+**Verify Phase — Specific Artifacts** (detect by filename):
+```
+If docs/spec/ contains test-plan:
+→ Also offer: Test plan review (test-plan-review)
+
+If docs/reviews/ contains test-reports:
+→ Also offer: Test report review (test-report-review)
+
+If preparing for release:
+→ Also offer: Release readiness review (release-review)
+```
+
+**Validate Phase** (after any Verify run):
+```
+Reviews are complete. Final step:
+
+1. Traceability matrix — cross-artifact gap analysis, orphans, coverage (traceability-matrix)
+2. Something else
+```
+
+### After traceability-matrix completes
+
+```
+Traceability validated. The SE workflow is complete.
+
+1. Fix identified gaps — re-run the relevant upstream skill
+2. Done — the artifact chain is verified
+```
+
 ## Skill Discovery
 
 When an SE task arrives, identify the phase and domain, then apply the corresponding skill:
@@ -251,6 +338,21 @@ Before completing the SE skill discovery:
 - [ ] The routed skill matches the slash command mapping table (if invoked via slash command)
 - [ ] No shortcuts taken — the user was not routed to a generic skill when a specialized one exists
 - [ ] The "When NOT to use" section of the target skill was read and confirmed not to apply
+
+## After This Skill (Pipeline Conductor)
+
+`using-se-skills` is the pipeline conductor — it does not produce an artifact; it routes to the skill that does. After this meta-skill identifies the correct phase and skill:
+
+| Phase Detected | Routes To |
+|----------------|-----------|
+| **Define** (no `docs/requirements/`) | `requirements-decompose` |
+| **Design** (has requirements, no architecture) | `architecture-design` / `software-architecture-design` / `hardware-architecture-design` |
+| **Document** (has architecture, no specs) | `spec-authoring` / `software-detailed-design` / `hardware-detailed-design` / `algorithm-design` |
+| **Verify** (has specs) | `design-review` / `requirements-review` / `code-static-review` / `test-plan-review` / `test-report-review` / `release-review` |
+| **Validate** (has reviews) | `traceability-matrix` |
+
+After the routed skill completes, the conductor loops back: re-scan `docs/`, detect the new phase, and present the next options.
+
 
 ## Quick Reference
 

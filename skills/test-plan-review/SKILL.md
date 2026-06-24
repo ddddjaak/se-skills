@@ -272,6 +272,19 @@ Before closing the review, confirm:
 - [ ] Report saved to `docs/reviews/`
 - [ ] Architecture and detailed design documents were NOT read during this review (context boundary enforced)
 
+## After This Skill
+
+Once the test plan review report is saved to `docs/reviews/`:
+
+| Next Step | Skill | What It Produces |
+|-----------|-------|-----------------|
+| **If test plan is approved** | (testing) | Proceed with test execution per the approved test plan |
+| **If findings require fixes** | `spec-authoring` | Update the test plan to address gaps identified in review |
+| After test execution | `test-report-review` | Review test results and reports for correctness and traceability |
+| Quality check | `traceability-matrix` | Verify requirements → test case coverage completeness |
+
+
+
 ## See Also
 
 - For software test plan checklist criteria: `references/software-test-plan-checklist.md`

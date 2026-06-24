@@ -1,0 +1,146 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$description": "SE Pipeline artifact manifest — tracks every artifact produced by every skill, enabling cross-session resume and version consistency checks.",
+
+  "pipeline": {
+    "last_updated": "2025-01-01T00:00:00Z",
+    "current_phase": "Define",
+    "status": "not_started"
+  },
+
+  "artifacts": {
+    "requirements": {
+      "skill": "requirements-decompose",
+      "files": [],
+      "version": null,
+      "status": "not_produced",
+      "notes": "Output of requirements-decompose. Files appear in docs/requirements/ with REQ-XXX IDs."
+    },
+    "architecture_system": {
+      "skill": "architecture-design",
+      "files": [],
+      "version": null,
+      "status": "not_produced",
+      "depends_on": ["requirements"],
+      "notes": "Output of architecture-design. Files appear in docs/architecture/ with MOD-XXX and IF-XXX IDs."
+    },
+    "architecture_software": {
+      "skill": "software-architecture-design",
+      "files": [],
+      "version": null,
+      "status": "not_produced",
+      "depends_on": ["architecture_system"],
+      "notes": "Output of software-architecture-design. RTOS thread model, memory budget, IPC design."
+    },
+    "architecture_hardware": {
+      "skill": "hardware-architecture-design",
+      "files": [],
+      "version": null,
+      "status": "not_produced",
+      "depends_on": ["architecture_system"],
+      "notes": "Output of hardware-architecture-design. Pin assignments, voltage domains, PCB constraints."
+    },
+    "spec_system": {
+      "skill": "spec-authoring",
+      "files": [],
+      "version": null,
+      "status": "not_produced",
+      "depends_on": ["architecture_system"],
+      "notes": "Output of spec-authoring. SOD, HW-SW IF Spec, Test Plan in docs/spec/."
+    },
+    "spec_software_detailed": {
+      "skill": "software-detailed-design",
+      "files": [],
+      "version": null,
+      "status": "not_produced",
+      "depends_on": ["architecture_software"],
+      "notes": "Output of software-detailed-design. Function signatures, state machines, data structures."
+    },
+    "spec_hardware_detailed": {
+      "skill": "hardware-detailed-design",
+      "files": [],
+      "version": null,
+      "status": "not_produced",
+      "depends_on": ["architecture_hardware"],
+      "notes": "Output of hardware-detailed-design. Schematic guidance, BOM constraints, PCB rules."
+    },
+    "spec_algorithm": {
+      "skill": "algorithm-design",
+      "files": [],
+      "version": null,
+      "status": "not_produced",
+      "depends_on": ["requirements"],
+      "notes": "Output of algorithm-design. Signal processing chains, control loops, calibration."
+    },
+    "review_design": {
+      "skill": "design-review",
+      "files": [],
+      "version": null,
+      "status": "not_produced",
+      "depends_on": ["spec_system", "spec_software_detailed", "spec_hardware_detailed", "spec_algorithm"],
+      "notes": "Output of design-review. Four-lens adversarial review report in docs/reviews/."
+    },
+    "review_requirements": {
+      "skill": "requirements-review",
+      "files": [],
+      "version": null,
+      "status": "not_produced",
+      "depends_on": ["requirements"],
+      "notes": "Output of requirements-review. Checklist-based requirements review report."
+    },
+    "review_code": {
+      "skill": "code-static-review",
+      "files": [],
+      "version": null,
+      "status": "not_produced",
+      "depends_on": ["spec_software_detailed"],
+      "notes": "Output of code-static-review. Static analysis report against coding standards."
+    },
+    "review_test_plan": {
+      "skill": "test-plan-review",
+      "files": [],
+      "version": null,
+      "status": "not_produced",
+      "depends_on": ["spec_system"],
+      "notes": "Output of test-plan-review. Test plan completeness and compliance review."
+    },
+    "review_test_report": {
+      "skill": "test-report-review",
+      "files": [],
+      "version": null,
+      "status": "not_produced",
+      "depends_on": ["review_test_plan"],
+      "notes": "Output of test-report-review. Test report correctness and traceability review."
+    },
+    "review_release": {
+      "skill": "release-review",
+      "files": [],
+      "version": null,
+      "status": "not_produced",
+      "depends_on": ["review_test_report"],
+      "notes": "Output of release-review. Release readiness report (binaries, notes, test reports)."
+    },
+    "traceability": {
+      "skill": "traceability-matrix",
+      "files": [],
+      "version": null,
+      "status": "not_produced",
+      "depends_on": ["requirements", "architecture_system", "spec_system", "review_design"],
+      "notes": "Output of traceability-matrix. Cross-artifact gap analysis and coverage report."
+    }
+  },
+
+  "phase_checkpoints": {
+    "define_complete": false,
+    "design_complete": false,
+    "document_complete": false,
+    "verify_complete": false,
+    "validate_complete": false
+  },
+
+  "usage": {
+    "update_on_skill_completion": "After each skill produces an artifact, add the file path to the 'files' array and update 'version' and 'status' to 'produced'.",
+    "check_on_pipeline_start": "On session start, read this file to determine current phase. If this file exists and has artifacts, skip directory-only phase detection.",
+    "version_consistency": "Before running any downstream skill, verify that all 'depends_on' artifacts are in 'produced' status. If not, surface the missing prerequisite."
+  }
+}

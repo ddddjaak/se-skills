@@ -337,8 +337,14 @@ Before closing the review, confirm:
 
 ## See Also
 
-- For requirements-specific review criteria, invoke `requirements-review` skill
-- For code static review criteria, invoke `code-static-review` skill
-- For test plan review criteria, invoke `test-plan-review` skill
-- For test report review criteria, invoke `test-report-review` skill
-- For software release review criteria, invoke `release-review` skill
+## After This Skill
+
+Once the review report is generated and saved to `docs/reviews/`:
+
+| Next Step | Skill | What It Produces |
+|-----------|-------|-----------------|
+| **If findings require fixes** | (upstream skill) | Re-run the skill that produced the reviewed artifact to address findings |
+| **If review is clean** | `traceability-matrix` | Cross-artifact validation — verify the full REQ→DESIGN→TEST chain |
+| Deeper review | `requirements-review` / `code-static-review` / `test-plan-review` | Targeted checklist-based reviews for specific artifact types |
+
+**Pipeline mode**: After this skill completes with a clean review, the conductor will offer `traceability-matrix` as the Validate-phase step.

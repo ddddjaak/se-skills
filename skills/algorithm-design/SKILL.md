@@ -245,6 +245,18 @@ Before handing off to spec-authoring, confirm:
 - [ ] The human has explicitly confirmed the algorithm design document
 - [ ] The document is saved to `docs/specs/[project]-algorithm-design.md`
 
+## After This Skill
+
+Once the algorithm design is documented and saved to `docs/spec/`:
+
+| Next Step | Skill | What It Produces |
+|-----------|-------|-----------------|
+| **Natural next** | `design-review` | Four-lens adversarial review of the algorithm design |
+| Implementation | `software-detailed-design` | If the algorithm needs firmware-level implementation |
+| Quality check | `traceability-matrix` | Verify algorithm requirements → design traceability |
+
+
+
 ## See Also
 
 - For algorithm detailed design review criteria, see `references/solution-algorithm-detailed-design-checklist.md`

@@ -242,6 +242,18 @@ Before closing the review, confirm:
 - [ ] Report saved to `docs/reviews/` with project name and date in filename
 - [ ] Resolution tracking table initialized (empty, to be filled as findings are addressed)
 
+## After This Skill
+
+Once the release review report is saved to `docs/reviews/`:
+
+| Next Step | Skill | What It Produces |
+|-----------|-------|-----------------|
+| **If release is approved** | (release) | Proceed with external distribution — binaries, release notes, version manifest |
+| **If findings require fixes** | (upstream skill) | Address issues identified in review and re-submit |
+| **Final validation** | `traceability-matrix` | Verify complete REQ→DESIGN→TEST→RELEASE chain closure |
+
+
+
 ## See Also
 
 - `references/solution-software-release-review-checklist.md` — Primary release review checklist (4 domains: requirements coverage, test coverage, issue tracking, release content)

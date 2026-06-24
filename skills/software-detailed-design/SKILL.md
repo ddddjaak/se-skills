@@ -313,6 +313,18 @@ Before handing off to implementation, confirm:
 - [ ] The human has explicitly confirmed the detailed design document
 - [ ] The document is saved to a version-controlled location under `docs/specs/`
 
+## After This Skill
+
+Once software detailed design is saved to `docs/spec/`:
+
+| Next Step | Skill | What It Produces |
+|-----------|-------|-----------------|
+| **Natural next** | `design-review` | Four-lens adversarial review of the software detailed design |
+| Code review | `code-static-review` | Static analysis of source code against company coding standards |
+| Quality check | `traceability-matrix` | Verify SW architecture → detailed design traceability |
+
+
+
 ## See Also
 
 - For software module detailed design review criteria, see `references/software-detailed-design-checklist.md`

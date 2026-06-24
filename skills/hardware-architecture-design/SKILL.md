@@ -295,6 +295,18 @@ Before handing off to spec-authoring, confirm:
 - [ ] Risk register covers key uncertainties (SI, components, thermal, mechanical)
 - [ ] Open items have owners and due dates; human confirmed the document; saved under `docs/architecture/`
 
+## After This Skill
+
+Once hardware architecture is confirmed and saved to `docs/architecture/`:
+
+| Next Step | Skill | What It Produces |
+|-----------|-------|-----------------|
+| **Natural next** | `hardware-detailed-design` | Schematic guidance, BOM constraints, PCB layout rules, PDN design |
+| System integration | `spec-authoring` | Generate HW-SW Interface Specification for cross-department handoff |
+| Quality check | `traceability-matrix` | Verify requirements → HW architecture traceability |
+
+
+
 ## See Also
 
 - For hardware high-level design review criteria, see `references/solution-hardware-high-level-design-checklist.md`

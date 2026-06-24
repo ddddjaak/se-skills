@@ -422,6 +422,18 @@ Before finalizing, confirm:
 - [ ] The human has explicitly confirmed each specification document
 - [ ] Documents saved under `docs/specs/`
 
+## After This Skill
+
+Once specifications are authored and saved to `docs/spec/`:
+
+| Next Step | Skill | What It Produces |
+|-----------|-------|-----------------|
+| **Natural next** | `design-review` | Four-lens adversarial review (HW/SW/Test/System) of the spec artifacts |
+| Targeted review | `requirements-review` | If you want to verify requirements→spec traceability specifically |
+| Quality check | `traceability-matrix` | Verify REQ→SPEC→TEST coverage before review |
+
+**Pipeline mode**: After this skill completes, the conductor will detect `docs/spec/` and offer Verify-phase options automatically.
+
 ## See Also
 
 - For solution specification review criteria, see `references/solution-specification-checklist.md`

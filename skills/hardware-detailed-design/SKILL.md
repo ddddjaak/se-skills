@@ -319,6 +319,17 @@ Before handing off to schematic capture, confirm:
 - [ ] The human has explicitly confirmed the detailed design document
 - [ ] The document is saved to a version-controlled location under `docs/specs/`
 
+## After This Skill
+
+Once hardware detailed design is saved to `docs/spec/`:
+
+| Next Step | Skill | What It Produces |
+|-----------|-------|-----------------|
+| **Natural next** | `design-review` | Four-lens adversarial review of the hardware detailed design |
+| Quality check | `traceability-matrix` | Verify HW architecture → detailed design traceability |
+
+
+
 ## See Also
 
 - For hardware detailed design review criteria, see `references/solution-hardware-detailed-design-checklist.md`

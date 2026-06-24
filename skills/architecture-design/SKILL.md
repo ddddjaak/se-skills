@@ -273,6 +273,20 @@ Before handing off to spec-authoring, confirm:
 - [ ] The human has explicitly confirmed the architecture document
 - [ ] The document is saved to a version-controlled location under `docs/architecture/`
 
+## After This Skill
+
+Once system architecture is confirmed and saved to `docs/architecture/`:
+
+| Next Step | Skill | What It Produces |
+|-----------|-------|-----------------|
+| **Natural next** | `spec-authoring` | SOD, HW-SW IF Spec, Test Plan — formal specs for implementation teams |
+| HW detailed path | `hardware-detailed-design` | Schematic guidance, BOM constraints, PCB layout rules |
+| SW detailed path | `software-detailed-design` | Function signatures, data structures, state machines per module |
+| Algorithm path | `algorithm-design` | Signal processing chains, control loops, calibration routines |
+| Quality check | `traceability-matrix` | Verify REQ→MOD coverage, catch orphaned modules |
+
+**Pipeline mode**: After this skill completes, the conductor will detect `docs/architecture/` and offer Document-phase options automatically.
+
 ## See Also
 
 - For system-level architecture design review criteria, see `references/solution-architecture-design-checklist.md`
