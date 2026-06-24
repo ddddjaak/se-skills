@@ -1,6 +1,6 @@
 ---
 name: test-plan-review
-description: Reviews a test plan document for completeness and compliance against standardized checklists, verifies requirements-to-test-case coverage, and flags dead references, untestable claims, and missing P0 coverage. Use when a test plan document is complete and ready for review, before a test readiness milestone, or when a downstream team reports the test plan is incomplete or ambiguous.
+description: 测试方案审查：验证测试方案完整性、需求到测试用例覆盖率、死引用、不可测声明和P0覆盖缺失。Test plan review — verifies test plan completeness, requirements-to-test-case coverage, dead references, untestable claims, and missing P0 coverage. Use when the user says 测试方案审查, 测试计划审查, test plan review, or when a test plan document is ready for review before a test readiness milestone. NOT for reviewing test results (use test-report-review).
 ---
 
 # Test Plan Review

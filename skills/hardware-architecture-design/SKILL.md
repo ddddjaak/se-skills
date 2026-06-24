@@ -1,6 +1,6 @@
 ---
 name: hardware-architecture-design
-description: Transforms system architecture and HW-domain system requirements into a concrete hardware architecture — pin assignments, voltage domains, power tree, PCB stack-up constraints, signal integrity analysis, and component selection criteria. Use when system architecture and HW requirements are confirmed and you need to design the board-level hardware, when evaluating component alternatives, or when a design review surfaces missing hardware architecture decisions.
+description: 硬件板级架构设计：引脚分配、电压域、电源树、PCB叠层约束、信号完整性、器件选型。Hardware board-level architecture — pin assignments, voltage domains, power tree, PCB stack-up constraints, signal integrity analysis, and component selection criteria. Use when the user says 硬件架构, 引脚分配, 电源树, PCB约束, hardware architecture, pin assignment, power tree, or when system architecture and HW requirements are confirmed and board-level design can begin. NOT for system-level architecture (use architecture-design) or firmware architecture (use software-architecture-design).
 ---
 
 # Hardware Architecture Design

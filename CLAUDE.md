@@ -18,11 +18,30 @@ references/          → Detailed SE review checklists (loaded on demand via ski
 
 ### Trigger Keywords
 
-Any of these in the user's message → enter Pipeline Mode (unless a specific skill name like `requirements-decompose` is explicitly stated):
+**Pipeline Mode triggers** — user wants guided, step-by-step help. Enter when message contains any of these patterns (but NOT Goal Mode patterns):
 
-- **Chinese**: 方案, 需求, 架构, 详细设计, 规格, 审查, 测试方案, 测试报告, 追溯, 发布, 概要设计, 接口规格, 芯片, 产品, 评审, 代码审查, 静态检查
-- **English**: solution, requirements, architecture, design, specification, review, test plan, test report, traceability, release, chip, product, SoC, firmware, schematic
-- **Combined patterns**: "I have a PRD", "design a temperature sensor", "review this architecture", "check test coverage", "prepare for release"
+| Chinese Phrase Patterns | English Phrase Patterns |
+|------------------------|------------------------|
+| 帮我做需求 / 帮我分解需求 / 梳理需求 | "help me with requirements" / "structure the requirements" |
+| 帮我做架构 / 帮我设计架构 / 模块怎么划分 | "help me design the architecture" / "how should I structure" |
+| 帮我写规格 / 帮我写概要设计 / 生成接口文档 | "help me write the spec" / "generate the specification" |
+| 帮我审查 / 帮我review / 帮我检查一下 | "help me review" / "can you check this" |
+| 帮我做追溯 / 帮我检查覆盖 / 查一下缺口 | "help me with traceability" / "check coverage" |
+| 下一步做什么 / 该用哪个技能 / 我现在在哪个阶段 | "what should I do next" / "which phase am I in" |
+| 我有PRD / 我有需求文档 / 这是数据手册 | "I have a PRD" / "here is the datasheet" |
+
+**Goal Mode triggers** — user wants fully autonomous execution. Enter when message contains any of these patterns:
+
+| Chinese Phrase Patterns | English Phrase Patterns |
+|------------------------|------------------------|
+| 端到端做完 / 走完全流程 / 全部自动做 | "complete the full workflow" / "run through the entire pipeline" |
+| 从需求到追溯全自动 / 一条龙 / 不用问我 | "end to end" / "fully autonomous" / "don't ask me" |
+| 开干 / 直接开始 / go | "just do it" / "go ahead" / "run it all" |
+| 自动完成...的SE流程 / 自动走完...全链路 | "auto-complete the SE process for" |
+
+**Keyword-only triggers** (weaker signal — combine with context):
+
+When a message contains at least TWO of these single-word signals without a specific skill name, it likely indicates SE intent: 需求, 架构, 规格, 审查, 追溯, requirements, architecture, specification, review, traceability.
 
 ### Phase Detection (scan docs/ before responding)
 

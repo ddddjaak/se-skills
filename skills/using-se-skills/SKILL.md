@@ -1,6 +1,6 @@
 ---
 name: using-se-skills
-description: Discovers and invokes SE skills. Use when starting an SE session or when you need to discover which SE skill applies to the current task. This is the meta-skill that governs how all other SE skills are discovered and invoked.
+description: SE技能发现和管道引导器：自动检测当前阶段并引导用户完成Define→Design→Document→Verify→Validate全流程。SE skill discovery and pipeline conductor — automatically detects the current SE phase and guides the user through the full Define-Design-Document-Verify-Validate workflow chain. Use when the user says 我不知道用什么技能, 该用哪个技能, which skill should I use, what comes next, or when starting an SE session without knowing which phase to begin. This is the meta-skill that governs how all other SE skills are discovered and chained.
 ---
 
 # Using SE Skills

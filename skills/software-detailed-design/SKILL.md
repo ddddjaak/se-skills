@@ -1,6 +1,6 @@
 ---
 name: software-detailed-design
-description: Transforms software architecture into detailed firmware module design — function signatures, data structures, state machines, error handling logic, and thread-safe design patterns. Use when software architecture is confirmed and firmware implementation can begin, when a new module is added to an existing firmware codebase, or when the firmware team needs formal module specifications before writing code.
+description: 软件详细设计：函数签名、数据结构、状态机、错误处理、线程安全模式。Firmware module detailed design — function signatures, data structures, state machines, error handling logic, and thread-safe design patterns for each firmware module. Use when the user says 软件详细设计, 函数设计, 状态机设计, software detailed design, function specification, or when software architecture is confirmed and firmware implementation can begin. NOT for system-level specification (use spec-authoring) or hardware detailed design (use hardware-detailed-design).
 ---
 
 # Software Detailed Design

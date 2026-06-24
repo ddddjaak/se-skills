@@ -1,6 +1,6 @@
 ---
 name: requirements-decompose
-description: Transforms raw, heterogeneous inputs (PRD, chip datasheet, industry standards, customer specs) into a structured, traceable system requirements document. Use when a new chip or product project kicks off and requirements exist only as scattered documents, when multiple input sources contradict each other, or when you need to assign ownership (HW/SW/System) to each requirement.
+description: 需求分解：将原始输入（PRD、芯片数据手册、行业标准、客户规格）转化为结构化、可追溯的系统需求文档。Requirements decomposition — transforms raw inputs (PRD, chip datasheet, industry standards, customer specs) into structured, traceable system requirements with domain ownership. Use when the user says 需求分解, 需求分析, 需求梳理, requirements decomposition, "I have a PRD", "structure my requirements", or when starting a new chip/product project with scattered input documents.
 ---
 
 # Requirements Decompose

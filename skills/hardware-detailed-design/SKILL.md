@@ -1,6 +1,6 @@
 ---
 name: hardware-detailed-design
-description: Transforms hardware architecture into detailed hardware design — schematic guidance, BOM constraints, PCB layout rules, signal integrity requirements, and power delivery network design. Use when hardware architecture is confirmed and schematic capture can begin, when preparing PCB layout constraints, or when the EE team needs formal hardware design specifications.
+description: 硬件详细设计：原理图指导、BOM约束、PCB布局规则、信号完整性要求、电源完整性设计。Hardware detailed design — schematic guidance, BOM constraints, PCB layout rules, signal integrity requirements, and power delivery network (PDN) design. Use when the user says 硬件详细设计, 原理图设计, PCB布局, BOM, hardware detailed design, schematic design, PCB layout, or when hardware architecture is confirmed and schematic capture can begin. NOT for software detailed design (use software-detailed-design) or algorithm design (use algorithm-design).
 ---
 
 # Hardware Detailed Design

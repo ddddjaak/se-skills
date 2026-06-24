@@ -1,6 +1,6 @@
 ---
 name: architecture-design
-description: Transforms structured system requirements into a concrete architecture — module decomposition, interface definitions, constraint analysis, and trade-off decisions. Use when system requirements are confirmed and you need to design the module breakdown, when evaluating architecture alternatives, or when downstream spec-authoring detects missing architecture decisions.
+description: 系统级架构设计：将结构化需求分解为模块、定义接口、分析约束、记录权衡决策。System-level architecture design — decomposes system requirements into modules, defines every interface, analyzes cross-cutting constraints, and documents trade-off decisions. Use when the user says 系统架构, 架构设计, 模块划分, system architecture, module decomposition, or when you need to design the module breakdown from confirmed requirements. NOT for firmware/software architecture (use software-architecture-design) or hardware board architecture (use hardware-architecture-design).
 ---
 
 # Architecture Design

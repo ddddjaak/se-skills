@@ -1,6 +1,6 @@
 ---
 name: release-review
-description: Performs a software release readiness review against structured checklists. Cross-references the release package (binary, release notes, version manifest, test reports) against the solution software release review checklist and the mass production test strategy checklist, producing a findings report with severity classifications. Use when a release package is assembled and the team needs a gate review before external distribution, when preparing for a milestone release sign-off, or when a release candidate has been cut and must be verified for completeness and traceability.
+description: 发布就绪审查：交叉检查发布包（二进制、发布说明、版本清单、测试报告）的完整性和可追溯性。Release readiness gate review — cross-references the release package (binary, release notes, version manifest, test reports) against structured checklists for completeness and traceability. Use when the user says 发布审查, 发布就绪, 版本发布审查, release review, release readiness, or when a release candidate must be verified before external distribution. NOT for reviewing individual artifacts (use design-review for architecture/specs, test-report-review for test results).
 ---
 
 # Release Review

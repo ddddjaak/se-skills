@@ -1,6 +1,6 @@
 ---
 name: requirements-review
-description: Performs a focused checklist-based review of a requirements document (system-level or software-level) against company review checklists. Produces a findings report where every finding cites a checklist item ID. Use when a requirements document is ready for formal peer review, before feeding the requirements into architecture design, or when a downstream consumer reports that a requirements document is ambiguous or incomplete. This is NOT the four-lens adversarial design-review — it is a targeted, single-document review using pre-defined checklist criteria for requirements artifacts only.
+description: 需求文档审查：基于检查清单对需求文档进行完整性和可追溯性审查。每个发现都引用检查项ID。Requirements document checklist review — focused review of a requirements document against company review checklists. Every finding cites a checklist item ID. Use when the user says 需求审查, 需求评审, requirements review, or when a requirements document is ready for formal peer review. This is a targeted single-document review. NOT the four-lens adversarial design-review (use design-review for comprehensive multi-angle review).
 ---
 
 # Requirements Review

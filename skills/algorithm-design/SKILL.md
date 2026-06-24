@@ -1,6 +1,6 @@
 ---
 name: algorithm-design
-description: Designs algorithms referenced by system requirements — signal processing chains, control loops, calibration routines, filter design, data transforms. Every parameter is quantified and traced to a requirement. Use when system requirements specify algorithmic behavior (filter cutoff, control response time, calibration accuracy, signal chain latency), when the architecture document identifies modules that contain non-trivial algorithms, or when a downstream spec-authoring detects that algorithm details are missing.
+description: 算法设计：信号处理链路、控制环路、校准例程、滤波器设计、数据变换。每个参数量化并追溯到需求。Algorithm design — signal processing chains, control loops, calibration routines, filter design, and data transforms. Every parameter is quantified and traced to a requirement. Use when the user says 算法设计, 信号处理, 控制算法, 滤波器, 校准, algorithm design, signal processing, control loop, filter design, or when system requirements specify algorithmic behavior.
 ---
 
 # Algorithm Design

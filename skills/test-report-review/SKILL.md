@@ -1,6 +1,6 @@
 ---
 name: test-report-review
-description: Reviews a test report for completeness, correctness, and traceability against its governing test plan and relevant checklists. Verifies that test results are consistent with the pass/fail criteria defined in the test plan — never assuming criteria were relaxed. Use when a test report is submitted for sign-off, before a milestone review, or when discrepancies between test results and expectations are suspected.
+description: 测试报告审查：验证测试报告正确性、完整性及与测试方案的可追溯性。不会假设标准被放宽。Test report review — verifies test report correctness, completeness, and traceability against its governing test plan. Never assumes pass/fail criteria were relaxed. Use when the user says 测试报告审查, 测试结果审查, test report review, or when a test report is submitted for sign-off. NOT for reviewing the test plan itself (use test-plan-review).
 ---
 
 # Test Report Review

@@ -1,6 +1,6 @@
 ---
 name: code-static-review
-description: Performs static code review against ChipSea company coding standards defined in the Software Static Review Checklist. Checks source code for compliance across six categories: code hierarchy, layout, annotation, naming, design, and register definitions. Use when source code files need to be reviewed for coding standard compliance before check-in, at code freeze, or during peer review. Produces a structured review report saved to docs/reviews/.
+description: 代码静态审查：对照公司编码规范检查源代码，覆盖代码层次、排版、注释、命名、设计和寄存器定义六大类。Source code static review — checks source code for compliance across six categories: code hierarchy, layout, annotation, naming, design, and register definitions. Use when the user says 代码审查, 静态检查, 代码规范检查, code review, static analysis, coding standard, or when source code needs compliance checking before check-in or at code freeze. NOT for reviewing design documents (use design-review or requirements-review).
 ---
 
 # Code Static Review

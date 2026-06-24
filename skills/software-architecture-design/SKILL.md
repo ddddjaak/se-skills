@@ -1,6 +1,6 @@
 ---
 name: software-architecture-design
-description: Transforms system architecture and system requirements into a concrete software architecture — firmware module decomposition, RTOS thread/ISR model, memory budget allocation, and inter-module data flows. Use when system architecture is confirmed and detailed firmware design can begin, when evaluating software architecture alternatives, or when downstream software-detailed-design detects missing architecture decisions.
+description: 软件/固件架构设计：RTOS线程模型、内存预算、IPC设计、模块间数据流。Firmware/software architecture design — RTOS thread/ISR model, memory budget allocation, IPC design, and inter-module data flows. Use when the user says 软件架构, 固件架构, RTOS设计, firmware architecture, software architecture, memory budget, or when system architecture is confirmed and detailed firmware design can begin. NOT for system-level module decomposition (use architecture-design) or hardware board design (use hardware-architecture-design).
 ---
 
 # Software Architecture Design

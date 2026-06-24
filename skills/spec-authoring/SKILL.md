@@ -1,6 +1,6 @@
 ---
 name: spec-authoring
-description: Transforms architecture design and system requirements into formal specification documents — Software Outline Design, Hardware-Software Interface Specification, and Test Plan. Use when the architecture is confirmed and formal specifications are required for implementation, validation, or cross-department handoff.
+description: 规格文档编写：生成软件概要设计(SOD)、软硬件接口规格(HW-SW IF Spec)、测试方案(Test Plan)。Specification authoring — produces Software Outline Design (SOD), Hardware-Software Interface Specification, and Test Plan from architecture and requirements. Use when the user says 规格编写, 概要设计, 接口规格, 测试方案, SOD, HW-SW IF Spec, spec authoring, or when architecture is confirmed and formal specifications are needed for implementation teams.
 ---
 
 # Spec Authoring
