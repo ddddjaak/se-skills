@@ -7,3 +7,4 @@ node_modules/
 .claude/.simplify-ignore-cache/
 docs/implementation-plan.md
 docs/reviews/
+docs/v2-release-notes.md
