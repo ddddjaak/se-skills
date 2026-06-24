@@ -116,6 +116,152 @@ When starting a new session, check `docs/versions.json` first:
 - ❌ Jump downstream when upstream artifacts are missing — if `docs/requirements/` is empty, do NOT offer architecture design
 - ❌ Run multiple skills in parallel without asking — each phase gates on the previous one's output
 
+## SE Autonomous Goal Mode — GOAL-DRIVEN (Critical)
+
+**This is the fully autonomous mode.** When the user gives a clear end-goal — not "help me with X" but "complete the full SE workflow for X" — you run the entire Define → Design → Document → Verify → Validate chain autonomously. You do NOT ask per-phase questions. You self-correct when reviews fail. You only escalate when genuinely stuck.
+
+### Trigger (enter Goal Mode instead of Pipeline Mode)
+
+Pipeline Mode presents options and waits for user choice. Goal Mode executes autonomously. Enter Goal Mode when:
+
+| Trigger | Example |
+|---------|---------|
+| `/se-goal` command | `/se-goal 完成温度传感器方案的SE全流程` |
+| Explicit completion language | "端到端做完", "走完全流程", "自动完成...的SE", "complete the full SE workflow for", "run through the entire pipeline" |
+| Clear end-state declared | "从PRD到追溯矩阵全部自动做", "from requirements to traceability, go" |
+| User says "go" / "开干" after Pipeline Mode shows the first option | "直接开始，不用问我" |
+
+**If uncertain whether the user wants Pipeline Mode or Goal Mode, default to Pipeline Mode (ask).** Only enter Goal Mode when the intent is unambiguous.
+
+### Goal Execution Protocol (Plan → Act → Observe → Reflect)
+
+```
+GOAL RECEIVED
+    │
+    ▼
+┌─────────────────────────────────────────────┐
+│  PLAN: Parse goal, detect inputs, set path   │
+│  · What are we building?                     │
+│  · What inputs exist? (PRD, datasheet, etc.) │
+│  · What's the target endpoint?               │
+│  · Report the planned chain to user ONCE     │
+└────────────────────┬────────────────────────┘
+                     ▼
+┌─────────────────────────────────────────────┐
+│  ACT: Execute the next skill in chain        │
+│  · Auto-select skill based on phase + domain │
+│  · Run skill to completion                   │
+│  · Record output in versions.json            │
+└────────────────────┬────────────────────────┘
+                     ▼
+┌─────────────────────────────────────────────┐
+│  OBSERVE: Run verification checklist         │
+│  · Every skill has a verification section    │
+│  · Check every checkbox with evidence        │
+│  · Record pass/fail per checklist item       │
+└────────────────────┬────────────────────────┘
+                     ▼
+              ┌──────┴──────┐
+              │             │
+           ALL PASS     SOME FAIL
+              │             │
+              ▼             ▼
+    ┌─────────────┐  ┌──────────────────┐
+    │ Next Phase  │  │ REFLECT: Fix      │
+    │ (continue)  │  │ · Identify root   │
+    └─────────────┘  │   cause           │
+                     │ · Retry same      │
+                     │   skill (max 3)   │
+                     │ · If 3 failures:  │
+                     │   ESCALATE        │
+                     └────────┬─────────┘
+                              │
+                     ┌────────┴─────────┐
+                     │                  │
+                  FIXABLE          GENUINELY STUCK
+                     │                  │
+                     ▼                  ▼
+               Retry skill        ESCALATE to user
+               (go to ACT)        with specific
+                                  blocker + options
+```
+
+### Auto-Skill Selection Rules
+
+When in Goal Mode, do NOT present options. Select automatically:
+
+| Phase | Condition | Auto-Selected Skill |
+|-------|-----------|-------------------|
+| **Define** | Always | `requirements-decompose` |
+| **Design** | No prior architecture | `architecture-design` (system-level first) |
+| **Design** | System arch exists, user mentioned HW | `hardware-architecture-design` |
+| **Design** | System arch exists, user mentioned SW/firmware | `software-architecture-design` |
+| **Document** | System arch exists | `spec-authoring` |
+| **Document** | SW arch exists | `software-detailed-design` |
+| **Document** | HW arch exists | `hardware-detailed-design` |
+| **Document** | Algorithm requirements present | `algorithm-design` |
+| **Verify** | Spec documents exist | `design-review` (four-lens adversarial) |
+| **Verify** | Requirements doc only | `requirements-review` |
+| **Verify** | Source code exists | `code-static-review` |
+| **Verify** | Test plan doc exists | `test-plan-review` |
+| **Verify** | Test report exists | `test-report-review` |
+| **Verify** | Release package exists | `release-review` |
+| **Validate** | Reviews exist | `traceability-matrix` |
+
+**Domain inference from user's goal statement:**
+- "温度传感器" / "power management" / "motor control" → system-level (architecture-design)
+- "固件" / "firmware" / "RTOS" / "驱动" → SW path (software-architecture-design)
+- "PCB" / "原理图" / "schematic" / "layout" → HW path (hardware-architecture-design)
+
+### Self-Correction Protocol
+
+When a verification checklist fails:
+
+1. **Identify** which checklist items failed
+2. **Classify** the failure:
+   - **Missing content**: Skill didn't produce required output → re-run the same skill with explicit instruction to address the gap
+   - **Quality issue**: Output exists but doesn't meet quantified metrics → re-run with tighter constraints
+   - **Traceability gap**: Missing REQ/MOD/IF/TC IDs → re-run with explicit tracing instruction
+   - **Ambiguity**: Requirement/constraint is genuinely ambiguous → ESCALATE (don't guess)
+3. **Retry** the skill (max 3 attempts per phase). On retry, pass the specific failure items as context.
+4. **If 3 retries exhausted**: ESCALATE with:
+   - What was attempted (3 times)
+   - What checklist items still fail
+   - Recommended path forward (options for the user)
+
+### Stop Conditions
+
+| Condition | Action |
+|-----------|--------|
+| `traceability-matrix` passes all checks AND finds zero gaps | **SUCCESS** — report completion with artifact summary |
+| Same phase fails 3 consecutive retries | **ESCALATE** — present specific blocker and options to user |
+| Total skill executions exceed 20 | **STOP** — report progress so far, ask whether to continue |
+| User interrupts with "stop" / "pause" / "wait" | **PAUSE** — report current phase, completed artifacts, next steps |
+| Contradictory requirements or constraints detected | **ESCALATE** — surface the contradiction with specific REQ-XXX IDs |
+
+### Progress Reporting (Goal Mode)
+
+After each phase completes successfully, report ONE concise status line:
+
+```
+✅ Define  complete — 23 requirements (REQ-001 ~ REQ-023), 3 domains
+✅ Design  complete — 5 modules (MOD-01 ~ MOD-05), 12 interfaces
+✅ Document complete — SOD v1.0, HW-SW IF Spec v1.0, Test Plan v1.0
+⏳ Verify  in progress — running design-review (attempt 1)…
+```
+
+Do NOT ask "ready to proceed?" between phases in Goal Mode. Just report and continue.
+
+### Goal Mode vs Pipeline Mode
+
+| Dimension | Pipeline Mode | Goal Mode |
+|-----------|--------------|-----------|
+| Trigger | Any SE-related request | Explicit completion intent |
+| Phase transitions | User picks from options | Auto-selected by rules |
+| Verification failures | Reported to user | Auto-retried (max 3x) |
+| User interaction | Every phase | Only on escalation or completion |
+| Stop | User says "done" | Goal achieved or stuck |
+
 ## Skills by Phase
 
 | Phase | Skill | Domain | Description |
@@ -142,6 +288,7 @@ The meta-skill `using-se-skills` routes to the correct skill based on artifact t
 
 | Command | Routes to |
 |---------|----------|
+| `/se-goal` | **Autonomous Goal Mode** — full Define→Design→Document→Verify→Validate chain, auto-correcting, human only on escalation |
 | `/se-requirements` | `requirements-decompose` |
 | `/se-architecture` | `architecture-design` → `software-architecture-design` or `hardware-architecture-design` |
 | `/se-spec` | `spec-authoring` → `software-detailed-design`, `hardware-detailed-design`, or `algorithm-design` |
