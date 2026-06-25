@@ -2,8 +2,8 @@
   "mcpServers": {
     "drawio": {
       "command": "npx",
-      "args": ["-y", "diagram-master"],
-      "description": "Generate draw.io architecture diagrams from natural language — module decomposition, interface diagrams, data flows, block diagrams"
+      "args": ["-y", "@drawio/mcp"],
+      "description": "Official draw.io MCP (jgraph) — supports Mermaid, XML, CSV input. Generate architecture diagrams, flowcharts, and block diagrams that open directly in Draw.io editor."
     },
     "visio": {
       "command": "python",
