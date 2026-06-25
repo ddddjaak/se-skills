@@ -9,7 +9,7 @@ description: 四视角对抗式设计审查：以HW/SW/Test/System四个部门�
 
 An SE artifact reviewed by its author finds the problems the author already knows about. An SE artifact reviewed by a meeting finds the problems people notice while reading for approval. A design review that matters finds the problems no single reader would catch — the cross-domain inconsistencies, the unstated assumptions, the failure modes that only emerge when HW, SW, Test, and System perspectives collide.
 
-This skill is `doubt-driven-development` specialized for SE artifacts. It materializes four fresh-context reviewers, each biased to **disprove** through their department's lens, and reconciles their findings into a single actionable report. Run it before the formal design review meeting — so the meeting is about decisions, not discovery.
+This skill applies adversarial review methodology to SE artifacts. It materializes four fresh-context reviewers, each biased to **disprove** through their department's lens, and reconciles their findings into a single actionable report. Run it before the formal design review meeting — so the meeting is about decisions, not discovery.
 
 ## When to Use
 
@@ -67,7 +67,7 @@ Lenses:   [ ] All four (HW, SW, Test, System) — default
 
 ### Step 2: LENS-REVIEW — Four parallel adversarial reviews
 
-Spawn four independent reviewers, each receiving the ARTIFACT only — no author reasoning, no CLAIM, no context about why decisions were made. This is the same isolation pattern as `doubt-driven-development`: hand over the artifact and the adversarial prompt, not the conclusion.
+Spawn four independent reviewers, each receiving the ARTIFACT only — no author reasoning, no CLAIM, no context about why decisions were made. This is the same isolation pattern as adversarial review: hand over the artifact and the adversarial prompt, not the conclusion.
 
 Each lens has a distinct adversarial prompt tuned to its department's concerns.
 
@@ -195,7 +195,7 @@ ARTIFACT:
 
 ### Step 3: RECONCILE — Classify every finding
 
-Consolidate findings from all four reviewers. For each finding, classify using the precedence order (first matching class wins — same as `doubt-driven-development`):
+Consolidate findings from all four reviewers. For each finding, classify using the precedence order (first matching class wins — same classification precedence as adversarial review):
 
 **Classification precedence:**
 
@@ -336,6 +336,11 @@ Before closing the review, confirm:
 - [ ] If fixes were applied, artifact version updated to reflect the change
 
 ## See Also
+
+- For architecture design review criteria, see `references/solution-architecture-design-checklist.md`
+- For requirements analysis review criteria, see `references/solution-requirements-analysis-checklist.md`
+- For software detailed design review criteria, see `references/software-detailed-design-checklist.md`
+- For cross-department adversarial review agents, see `agents/system-architect.md`, `agents/hw-domain-expert.md`, `agents/fw-domain-expert.md`, `agents/verification-engineer.md`
 
 ## After This Skill
 

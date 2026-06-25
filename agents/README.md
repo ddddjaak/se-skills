@@ -23,7 +23,7 @@ Each persona is a standalone agent with:
 ## Composition Rules
 
 1. **The user (or a slash command) is the orchestrator.** Personas do not invoke other personas.
-2. **Parallel fan-out is the canonical multi-persona pattern.** `/se-review` fans out to up to 5 personas simultaneously, then merges findings.
+2. **Parallel fan-out is the canonical multi-persona pattern.** `/se-review` (via `design-review`) fans out to 4 personas simultaneously (HW, SW, Test, System lenses), then merges findings. `compliance-reviewer` is available as a separate targeted review.
 3. **Personas can be invoked individually.** Ask `hw-domain-expert` to review pin assignments without involving the full panel.
 4. **A persona may invoke skills** (`architecture-design`, `design-review`, etc.) when its review reveals a gap that requires upstream work.
 

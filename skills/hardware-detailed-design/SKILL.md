@@ -198,7 +198,7 @@ Assemble all outputs into a structured document. Present to user for confirmatio
 
 ## Output
 
-A hardware detailed design document saved to `docs/specs/[project]-hardware-detailed-design.md`:
+A hardware detailed design document saved to `docs/spec/[project]-hardware-detailed-design.md`:
 
 ```markdown
 # Hardware Detailed Design: [Project/Board Name]
@@ -317,7 +317,7 @@ Before handing off to schematic capture, confirm:
 - [ ] All datasheet-cited values have section references
 - [ ] Every sole-source component flagged with risk level and procurement lead time
 - [ ] The human has explicitly confirmed the detailed design document
-- [ ] The document is saved to a version-controlled location under `docs/specs/`
+- [ ] The document is saved to a version-controlled location under `docs/spec/`
 
 ## After This Skill
 
@@ -328,7 +328,7 @@ Once hardware detailed design is saved to `docs/spec/`:
 | **Natural next** | `design-review` | Four-lens adversarial review of the hardware detailed design |
 | Quality check | `traceability-matrix` | Verify HW architecture → detailed design traceability |
 
-
+**Pipeline mode**: After this skill completes, the conductor will detect `docs/spec/` and offer Verify-phase options automatically.
 
 ## See Also
 

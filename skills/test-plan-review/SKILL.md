@@ -283,7 +283,7 @@ Once the test plan review report is saved to `docs/reviews/`:
 | After test execution | `test-report-review` | Review test results and reports for correctness and traceability |
 | Quality check | `traceability-matrix` | Verify requirements → test case coverage completeness |
 
-
+**Pipeline mode**: After this skill completes, the conductor will detect `docs/reviews/` and offer `traceability-matrix` as the Validate-phase step.
 
 ## See Also
 

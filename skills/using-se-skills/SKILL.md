@@ -306,7 +306,7 @@ Your job is surgical precision on the task at hand, not unsolicited renovation o
 
 | Rationalization | Reality |
 |---|---|
-| "I already know which skill to use — I don't need a discovery flow" | The discovery flow exists because the number of skills (15+) exceeds what one person can keep in mind. Even the skill authors use the flow to confirm they are not missing a more specific skill for the task. |
+| "I already know which skill to use — I don't need a discovery flow" | The discovery flow exists because the number of skills (16) exceeds what one person can keep in mind. Even the skill authors use the flow to confirm they are not missing a more specific skill for the task. |
 | "The SE chain is too many steps for a small task" | The chain is a map, not a mandatory route. A small task may need only one skill. The chain shows the full landscape so you know what you are skipping — and why. |
 | "I'll just use architecture-design for everything — it's the closest" | Architecture-design handles system-level module decomposition. It does not cover HW pin assignments, software data structures, algorithm math, or release readiness. Using the wrong skill means missing the right checklist — and the right verification gate. |
 | "Meta-skills don't need to follow the same format as regular skills" | Meta-skills are discovered and invoked by agents the same way as any other skill. If the format diverges, the agent mis-handles it. Consistency across all skills is how the discovery machinery works reliably. |

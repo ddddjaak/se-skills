@@ -53,15 +53,15 @@ ARTIFACT INVENTORY:
    → Defines: MOD-01 through MOD-12, CON-001 through CON-015, IF-001 through IF-023
    → References: SYS-REQ-001 through SYS-REQ-023, HW-REQ-001 through HW-REQ-008
 
-3. Software Outline Design: docs/specs/project-x-sod-power.md v1.0
+3. Software Outline Design: docs/spec/project-x-sod-power.md v1.0
    → Defines: FEAT-001 through FEAT-012
    → References: MOD-01, MOD-02, IF-001 through IF-006, SYS-REQ-001 through SYS-REQ-008
 
-4. HW-SW Interface Spec: docs/specs/project-x-hwsw-if.md v1.0
+4. HW-SW Interface Spec: docs/spec/project-x-hwsw-if.md v1.0
    → Defines: (pins, registers, interrupts — numbered by section)
    → References: MOD-01 through MOD-12, CON-001 through CON-012
 
-5. Test Plan: docs/specs/project-x-test-plan.md v1.0
+5. Test Plan: docs/spec/project-x-test-plan.md v1.0
    → Defines: TC-001 through TC-035
    → References: SYS-REQ-001 through SYS-REQ-020, HW-REQ-001 through HW-REQ-005
 

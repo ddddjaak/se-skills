@@ -252,7 +252,7 @@ Once the release review report is saved to `docs/reviews/`:
 | **If findings require fixes** | (upstream skill) | Address issues identified in review and re-submit |
 | **Final validation** | `traceability-matrix` | Verify complete REQ→DESIGN→TEST→RELEASE chain closure |
 
-
+**Pipeline mode**: After this skill completes, the conductor will detect `docs/reviews/` and offer `traceability-matrix` as the Validate-phase step.
 
 ## See Also
 

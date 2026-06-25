@@ -191,6 +191,13 @@ A software architecture document saved to `docs/architecture/[project]-software-
 | RTOS / Framework | [name, version] |
 | Target MCU/SoC | [part number] |
 
+## Scope
+### What This Document Covers
+[One paragraph: this software architecture design covers the RTOS thread model, IPC mechanisms, memory budget, timing-critical data flows, and firmware configuration for [Project Name]. Reference the system architecture document and its MOD-ID / IF-ID range.]
+
+### What This Document Does NOT Cover
+[Explicit exclusions. "This document does not cover: system-level module decomposition (see architecture-design), detailed hardware pin assignments (see hardware-architecture-design), per-module function signatures and state machines (see software-detailed-design), hardware schematics or PCB layout rules (see hardware-detailed-design)."]
+
 ## 1. Execution Context Model
 
 ### Thread Assignment Table
@@ -325,7 +332,7 @@ Once software architecture is confirmed and saved to `docs/architecture/`:
 | System integration | `spec-authoring` | Generate Software Outline Design (SOD) for the firmware team |
 | Quality check | `traceability-matrix` | Verify requirements → SW architecture traceability |
 
-
+**Pipeline mode**: After this skill completes, the conductor will detect `docs/architecture/` and offer Document-phase options automatically.
 
 ## See Also
 

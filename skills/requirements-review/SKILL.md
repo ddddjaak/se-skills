@@ -288,7 +288,7 @@ Once the requirements review report is saved to `docs/reviews/`:
 | **If findings require fixes** | `requirements-decompose` | Re-decompose requirements to address gaps identified in review |
 | Quality check | `traceability-matrix` | Verify requirements completeness and traceability |
 
-
+**Pipeline mode**: After this skill completes, the conductor will detect `docs/reviews/` and offer `traceability-matrix` as the Validate-phase step.
 
 ## See Also
 

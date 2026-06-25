@@ -13,4 +13,4 @@ Work through the five-step process:
 4. CROSS-CHECK — verify internal consistency: all requirement references resolve, all interface definitions match architecture, no orphan content
 5. FINALIZE — present for human review and sign-off
 
-Save outputs to docs/specs/[project]-[spec-type].md after user confirmation.
+Save outputs to docs/spec/[project]-[spec-type].md after user confirmation.

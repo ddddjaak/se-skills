@@ -272,7 +272,7 @@ Once the test report review is saved to `docs/reviews/`:
 | **If findings require fixes** | (upstream skill) | Address test failures and re-execute affected test cases |
 | **Final validation** | `traceability-matrix` | Verify complete REQ→TEST→REPORT chain with pass/fail traceability |
 
-
+**Pipeline mode**: After this skill completes, the conductor will detect `docs/reviews/` and offer `traceability-matrix` as the Validate-phase step.
 
 ## See Also
 

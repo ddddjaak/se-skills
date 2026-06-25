@@ -169,7 +169,7 @@ Assemble all outputs into the algorithm design document. Present to the user for
 
 ## Output
 
-An algorithm design document saved to `docs/specs/[project]-algorithm-design.md` after user confirmation:
+An algorithm design document saved to `docs/spec/[project]-algorithm-design.md` after user confirmation:
 
 ```markdown
 # Algorithm Design: [Project/Chip Name]
@@ -243,7 +243,7 @@ Before handing off to spec-authoring, confirm:
 - [ ] Algorithm resource totals fit within architecture allocations; conflicts are surfaced
 - [ ] No unrelated requirements or architecture modules were read or referenced
 - [ ] The human has explicitly confirmed the algorithm design document
-- [ ] The document is saved to `docs/specs/[project]-algorithm-design.md`
+- [ ] The document is saved to `docs/spec/[project]-algorithm-design.md`
 
 ## After This Skill
 
@@ -255,7 +255,7 @@ Once the algorithm design is documented and saved to `docs/spec/`:
 | Implementation | `software-detailed-design` | If the algorithm needs firmware-level implementation |
 | Quality check | `traceability-matrix` | Verify algorithm requirements → design traceability |
 
-
+**Pipeline mode**: After this skill completes, the conductor will detect `docs/spec/` and offer Verify-phase options automatically.
 
 ## See Also
 

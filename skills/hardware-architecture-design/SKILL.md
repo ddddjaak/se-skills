@@ -208,6 +208,13 @@ A hardware architecture document saved to `docs/architecture/[project]-hardware-
 - Version, Date, Author
 - References: [System Requirements doc, System Architecture doc, Chip Datasheet rev, Reference Manual rev, Industry Standards, Mechanical Envelope Drawing]
 
+## Scope
+### What This Document Covers
+[One paragraph: this hardware architecture design covers the power tree, pin assignments, physical interface specifications, signal integrity requirements, component selection decisions, and PCB constraints for [Project/Board Name]. Reference the system architecture document and its relevant block and interface IDs.]
+
+### What This Document Does NOT Cover
+[Explicit exclusions. "This document does not cover: system-level module decomposition (see architecture-design), firmware thread models and memory budgets (see software-architecture-design), detailed component part numbers and BOM cost analysis (see hardware-detailed-design), test procedures and validation plans (see spec-authoring)."]
+
 ## 1. Hardware Block Diagram
 [ASCII block diagram: functional blocks, power rails, high-speed vs. low-speed paths, connectors, isolation, protection zones]
 
@@ -305,7 +312,7 @@ Once hardware architecture is confirmed and saved to `docs/architecture/`:
 | System integration | `spec-authoring` | Generate HW-SW Interface Specification for cross-department handoff |
 | Quality check | `traceability-matrix` | Verify requirements → HW architecture traceability |
 
-
+**Pipeline mode**: After this skill completes, the conductor will detect `docs/architecture/` and offer Document-phase options automatically.
 
 ## See Also
 

@@ -88,11 +88,7 @@ description: <what the skill does, third person>. Use when <trigger conditions>.
 
 ### 5. 验证
 
-运行 ae-skills 的验证脚本检查前置元数据：
-
-```bash
-node ../ae-skills/scripts/validate-skills.js
-```
+验证技能的前置元数据是否符合规范：
 
 或者手动确认：
 - [ ] `name` 字段与目录名完全匹配

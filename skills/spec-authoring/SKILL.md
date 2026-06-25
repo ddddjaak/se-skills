@@ -11,7 +11,7 @@ Architecture design says how the system fits together. Specifications say how to
 
 This skill produces three specification types from a common base of requirements and architecture: the Software Outline Design (软件概要设计), the Hardware-Software Interface Specification (软硬件接口规格), and the Test Plan (测试方案). Each has a different audience and a different structure, but all draw from the same upstream artifacts and all enforce the same standard: every claim traces to a requirement, every interface is fully defined, every test case has quantified pass/fail criteria.
 
-Spec authoring is to SE what `spec-driven-development` is to software development — but for chip-vendor specification formats rather than software feature specs.
+Spec authoring is to SE what specification-driven development is to software development — but for chip-vendor specification formats rather than software feature specs.
 
 ## When to Use
 
@@ -369,12 +369,12 @@ Present the complete specification document to the user. The gate is explicit co
 
 ## Output
 
-One or more specification documents, saved under `docs/specs/` after user confirmation:
+One or more specification documents, saved under `docs/spec/` after user confirmation:
 
 ```
-docs/specs/[project]-sod-[module].md           # Software Outline Design
-docs/specs/[project]-hwsw-if-[subsystem].md    # HW-SW Interface Spec
-docs/specs/[project]-test-plan-[scope].md      # Test Plan
+docs/spec/[project]-sod-[module].md           # Software Outline Design
+docs/spec/[project]-hwsw-if-[subsystem].md    # HW-SW Interface Spec
+docs/spec/[project]-test-plan-[scope].md      # Test Plan
 ```
 
 ## Interaction with Other Skills
@@ -420,7 +420,7 @@ Before finalizing, confirm:
 - [ ] Cross-check passed — no unresolved inconsistencies between the spec and its inputs
 - [ ] All TBDs have owners and due dates
 - [ ] The human has explicitly confirmed each specification document
-- [ ] Documents saved under `docs/specs/`
+- [ ] Documents saved under `docs/spec/`
 
 ## After This Skill
 

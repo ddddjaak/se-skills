@@ -204,7 +204,7 @@ Present to user for confirmation. The firmware engineer implementing this module
 
 ## Output
 
-A software detailed design document saved to `docs/specs/[project]-sdd-[module-name].md`:
+A software detailed design document saved to `docs/spec/[project]-sdd-[module-name].md`:
 
 ```markdown
 # Software Detailed Design: [Module Name]
@@ -311,7 +311,7 @@ Before handing off to implementation, confirm:
 - [ ] Timing budgets quantified for every deadline-bound operation; estimation method documented (instruction count, prototype measurement, or datasheet)
 - [ ] All TBDs have owners and due dates
 - [ ] The human has explicitly confirmed the detailed design document
-- [ ] The document is saved to a version-controlled location under `docs/specs/`
+- [ ] The document is saved to a version-controlled location under `docs/spec/`
 
 ## After This Skill
 
@@ -323,7 +323,7 @@ Once software detailed design is saved to `docs/spec/`:
 | Code review | `code-static-review` | Static analysis of source code against company coding standards |
 | Quality check | `traceability-matrix` | Verify SW architecture → detailed design traceability |
 
-
+**Pipeline mode**: After this skill completes, the conductor will detect `docs/spec/` and offer Verify-phase options automatically.
 
 ## See Also
 

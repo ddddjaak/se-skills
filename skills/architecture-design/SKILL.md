@@ -11,7 +11,7 @@ System requirements say *what* the system must do. Architecture design says *how
 
 A good architecture document is the answer key for every downstream question: "which module owns this feature?", "what does module A promise to module B?", "why did we choose this protocol over that one?". Without it, every implementer answers these differently, and integration becomes a discovery process instead of an execution plan.
 
-Architecture design is to SE what `planning-and-task-breakdown` is to software development — but for hardware-software system architecture rather than implementation tasks.
+Architecture design is to SE what task-breakdown planning is to software development — but for hardware-software system architecture rather than implementation tasks.
 
 ## When to Use
 
@@ -195,6 +195,13 @@ An architecture design document saved to `docs/architecture/[project]-architectu
 ## Document Control
 - Version, Date, Author
 - References: [System Requirements doc path + version, Datasheet rev, Standards]
+
+## Scope
+### What This Document Covers
+[One paragraph: this architecture design covers the system-level module decomposition, interface definitions, cross-cutting constraint analysis, and design trade-off decisions for [Project Name]. Reference the system requirements document and its REQ-ID range.]
+
+### What This Document Does NOT Cover
+[Explicit exclusions. "This document does not cover: detailed firmware thread models and memory budgets (see software-architecture-design), detailed hardware pin assignments and PCB constraints (see hardware-architecture-design), module-level function signatures and state machines (see software-detailed-design), test plans and test procedures (see spec-authoring)."]
 
 ## 1. System Block Diagram
 [ASCII art block diagram or reference to external diagram file]

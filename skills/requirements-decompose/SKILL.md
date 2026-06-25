@@ -11,7 +11,7 @@ Raw requirements arrive as a pile of heterogeneous documents — a PRD from mark
 
 This skill transforms that pile into a single, structured system requirements document where every requirement is classified by domain and type, conflicts are resolved, gaps are identified, derived requirements are explicit, and ownership is assigned. Every downstream artifact — architecture, specifications, test plans — depends on this document. The quality of the entire project starts here.
 
-This skill is to SE what `interview-me` is to software development: it confronts ambiguity head-on before any design work begins.
+This skill is to SE what stakeholder interviewing is to software development: it confronts ambiguity head-on before any design work begins.
 
 ## When to Use
 
@@ -125,7 +125,7 @@ REQ-023: "System shall boot quickly"
 → GUESS: cold boot < 500ms based on competitive analysis. Confirm?
 ```
 
-For every conflict, gap, and ambiguity, attach a GUESS with your reasoning — following the `interview-me` pattern. Reacting to a wrong guess is faster for the user than generating an answer from scratch.
+For every conflict, gap, and ambiguity, attach a GUESS with your reasoning — following the structured interview pattern. Reacting to a wrong guess is faster for the user than generating an answer from scratch.
 
 ### Step 4: DERIVE — Generate system-level requirements
 

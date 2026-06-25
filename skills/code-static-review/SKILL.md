@@ -247,7 +247,7 @@ Once the static review report is saved to `docs/reviews/`:
 | **If code is clean** | `traceability-matrix` | Cross-artifact validation of the full chain |
 | Further reviews | `test-plan-review` / `test-report-review` | Continue with test artifact reviews if relevant |
 
-
+**Pipeline mode**: After this skill completes, the conductor will detect `docs/reviews/` and offer `traceability-matrix` as the Validate-phase step.
 
 ## See Also
 
