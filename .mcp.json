@@ -9,6 +9,11 @@
       "command": "python",
       "args": ["-c", "from visio_mcp_server.visio_server import main; main()"],
       "description": "Microsoft Visio .vsdx generation — professional flowchart, block diagram, and interface diagram creation for user manuals and formal documentation"
+    },
+    "math": {
+      "command": "uvx",
+      "args": ["gnomon-mcp"],
+      "description": "Engineering calculator — Python math expressions, unit conversion (Pint), date/calendar. For MCU datasheet: SNR, power budget, thermal, timing, baud rate error."
     }
   }
 }
