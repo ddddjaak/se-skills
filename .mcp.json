@@ -4,6 +4,11 @@
       "command": "npx",
       "args": ["-y", "diagram-master"],
       "description": "Generate draw.io architecture diagrams from natural language — module decomposition, interface diagrams, data flows, block diagrams"
+    },
+    "visio": {
+      "command": "python",
+      "args": ["-c", "from visio_mcp_server.visio_server import main; main()"],
+      "description": "Microsoft Visio .vsdx generation — professional flowchart, block diagram, and interface diagram creation for user manuals and formal documentation"
     }
   }
 }
