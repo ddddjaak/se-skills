@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "drawio": {
+      "command": "npx",
+      "args": ["-y", "drawio-mcp"],
+      "description": "Generate draw.io architecture diagrams — module decomposition, interface diagrams, data flows, block diagrams"
+    }
+  }
+}
