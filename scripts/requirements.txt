@@ -1,0 +1,26 @@
+# SE PDF Preprocessing Pipeline - Dependencies
+# Install: pip install -r requirements.txt
+
+# Core: PDF text + table extraction with layout preservation
+pdfplumber>=0.11.0
+
+# Metadata, encryption check, basic operations
+pypdf>=5.0.0
+
+# OCR fallback for scanned PDFs (optional)
+pdf2image>=1.17.0
+pytesseract>=0.3.13
+
+# Embedded image extraction from PDF
+PyMuPDF>=1.24.0
+
+# Spreadsheet processing (.xlsx/.xls/.csv/.tsv)
+openpyxl>=3.1.0
+pandas>=2.0.0
+
+# Word document processing (.docx)
+python-docx>=1.1.0
+
+# Presentation processing (.pptx)
+python-pptx>=1.0.0
+markitdown[pptx]>=0.1.0

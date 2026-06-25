@@ -31,13 +31,192 @@ This skill is to SE what stakeholder interviewing is to software development: it
 ## The Process
 
 ```
-COLLECT ──→ CLASSIFY ──→ RESOLVE ──→ DERIVE ──→ ASSIGN ──→ VALIDATE
-   │           │           │           │           │            │
-   ▼           ▼           ▼           ▼           ▼            ▼
- Gather     Categorize  Resolve     Derive     Assign       Human
- all raw    by domain   conflicts   system-    ownership    review
- inputs     & type      & gaps      level reqs (HW/SW/SYS)  & sign-off
+PREPROCESS ──→ COLLECT ──→ CLASSIFY ──→ RESOLVE ──→ DERIVE ──→ ASSIGN ──→ VALIDATE
+    │             │           │           │           │           │            │
+    ▼             ▼           ▼           ▼           ▼           ▼            ▼
+  Extract      Gather     Categorize  Resolve     Derive     Assign       Human
+  text/tables  all raw    by domain   conflicts   system-    ownership    review
+  from PDFs    inputs     & type      & gaps      level reqs (HW/SW/SYS)  & sign-off
 ```
+
+### Step 0: PREPROCESS — Extract structured content from document inputs
+
+Before manual inventory, run automated extraction on all PDF and spreadsheet inputs. This step converts opaque documents into structured Markdown that the COLLECT and CLASSIFY steps can consume accurately.
+
+#### PDF inputs (`docs/inputs/*.pdf`)
+
+```bash
+# Single PDF
+python scripts/preprocess_pdf.py -i docs/inputs/datasheet.pdf -o docs/inputs-preprocessed/
+
+# Batch all PDFs
+python scripts/preprocess_pdf.py -i docs/inputs/ -o docs/inputs-preprocessed/ --batch
+
+# Skip OCR if not needed (faster)
+python scripts/preprocess_pdf.py -i docs/inputs/datasheet.pdf -o docs/inputs-preprocessed/ --no-ocr
+```
+
+**Then read the manifest** to understand what was extracted:
+
+```
+Read docs/inputs-preprocessed/<source-name>/manifest.json first.
+It tells you:
+- Which pages have text (read full-text.md directly)
+- Which pages have tables (read tables/table-*.md)
+- Which pages have figures (view figures/fig-*.png with Read tool)
+- Any issues: encrypted sections, scanned pages, ambiguous diagrams
+```
+
+**For each extracted figure**, use the Read tool to view it, then generate a "figure description" for downstream consumption. Focus on SE-relevant information:
+
+| If the figure is a... | Extract... |
+|----------------------|------------|
+| Timing diagram | Signal names, thresholds, min/typ/max times |
+| Block diagram | Module names, interfaces, data flow direction |
+| Pinout diagram | Pin numbers, functions, alternate functions |
+| State machine diagram | States, transitions, trigger conditions |
+| Power sequencing | Rail names, order, timing constraints |
+
+**If the figure cannot be interpreted reliably**, surface it as a question:
+
+```
+FIGURE F-003 (page 4): Appears to be a power sequencing diagram.
+I can see Vcore, Vio, and Vaux rails with timing annotations, but
+I cannot reliably read all values. Please confirm:
+- Vcore ramp time: 500μs? 5ms?
+- Vio → Vcore delay: 100μs?
+```
+
+**When no PDF inputs exist** (user pastes text directly), skip this step and proceed to COLLECT.
+
+**If the preprocessing scripts are not yet installed**, guide the user:
+
+```
+pip install -r scripts/requirements.txt
+```
+
+See `references/pdf-processing-guide.md` for detailed PDF extraction techniques and troubleshooting.
+
+#### Spreadsheet inputs (`docs/inputs/*.xlsx`, `*.xls`, `*.csv`, `*.tsv`)
+
+```bash
+# Single spreadsheet
+python scripts/preprocess_xlsx.py -i docs/inputs/BOM.xlsx -o docs/inputs-preprocessed/
+
+# Batch all spreadsheets
+python scripts/preprocess_xlsx.py -i docs/inputs/ -o docs/inputs-preprocessed/ --batch
+```
+
+**Then read the manifest** to understand what was extracted:
+
+```
+Read docs/inputs-preprocessed/<source-name>/manifest.json.
+It tells you:
+- How many sheets were exported (read sheets/sheet-*.md)
+- Row/column counts per sheet
+- Any issues: empty sheets, truncated data, encoding problems
+```
+
+**Map each sheet to its SE domain** based on column content:
+
+| Sheet Pattern | Likely Domain | Maps to Requirement Type |
+|--------------|---------------|------------------------|
+| Pin#, Name, Type, Function | HW | Interface (IF-XXX) |
+| Item, Qty, Part#, Value, Footprint | HW | Constraint (CON-XXX) |
+| Offset, Register, Bit, Default | SW | Functional (REQ-XXX) |
+| Parameter, Min, Typ, Max, Unit | System/HW | Performance (REQ-XXX) |
+| Test ID, Req Ref, Pass/Fail | Test | Verification (links to TC-XXX) |
+
+See `references/spreadsheet-processing-guide.md` for detailed extraction techniques and edge case handling.
+
+#### Word document inputs (`docs/inputs/*.docx`)
+
+PRDs, customer specifications, industry standards, and meeting notes often arrive as Word documents.
+
+```bash
+# Single document
+python scripts/preprocess_docx.py -i docs/inputs/PRD.docx -o docs/inputs-preprocessed/
+
+# Batch all .docx files
+python scripts/preprocess_docx.py -i docs/inputs/ -o docs/inputs-preprocessed/ --batch
+```
+
+**If the document is in legacy .doc format**, convert first:
+
+```bash
+soffice --headless --convert-to docx docs/inputs/legacy.doc
+```
+
+**Then read the manifest** to understand the document structure:
+
+```
+Read docs/inputs-preprocessed/<source-name>/manifest.json.
+It tells you:
+- Total paragraphs and tables extracted
+- Section hierarchy (Heading 1 → 2 → 3) — maps to requirement scope
+- Embedded images extracted to images/
+- Any issues: tracked changes, legacy format, missing content
+```
+
+**Map document headings to requirement scope**:
+
+| Heading Pattern | SE Interpretation |
+|----------------|-------------------|
+| "Functional Requirements" / 功能需求 | Functional (REQ-XXX) |
+| "Performance Requirements" / 性能需求 | Performance (REQ-XXX) |
+| "Interface Specification" / 接口规范 | Interface (IF-XXX) |
+| "Compliance" / "Standards" / 合规 | Compliance |
+| "Electrical Characteristics" / 电气特性 | HW domain, Performance type |
+| "Mechanical Requirements" / 结构需求 | Mechanical domain, Constraint type |
+
+**For requirements embedded in prose paragraphs**, apply keyword scanning after extraction:
+
+```
+Paragraph: "The system shall support SPI communication at 10MHz with
+DMA capability for transfers exceeding 256 bytes."
+
+Extracted:
+→ REQ-XXX: System shall support SPI communication at 10MHz (Interface)
+→ REQ-XXX: SPI shall support DMA for transfers > 256 bytes (Functional)
+```
+
+See `references/docx-processing-guide.md` for detailed extraction techniques and edge case handling.
+
+#### Presentation inputs (`docs/inputs/*.pptx`)
+
+Architecture overviews, design reviews, and customer requirement presentations often arrive as slide decks.
+
+```bash
+# Single presentation
+python scripts/preprocess_pptx.py -i docs/inputs/architecture-review.pptx -o docs/inputs-preprocessed/
+
+# Batch all .pptx files
+python scripts/preprocess_pptx.py -i docs/inputs/ -o docs/inputs-preprocessed/ --batch
+```
+
+**Then read the manifest** for slide-level metadata:
+
+```
+Read docs/inputs-preprocessed/<source-name>/manifest.json.
+It tells you:
+- Total slides, which have speaker notes, which have tables
+- Per-slide titles and text density
+- Embedded images extracted to images/
+```
+
+**Key extraction targets in presentations:**
+
+| Slide Content | SE Value | Action |
+|--------------|----------|--------|
+| Speaker notes | Often contain rationale, decisions, constraints not on the slide | Always extract and review |
+| Architecture diagrams (images) | Module decomposition, interfaces | Use Read tool → describe → feed to architecture-design |
+| Comparison/trade-off tables | Design decisions | Extract as decision records |
+| "Open Issues" / "Risks" slides | Gap log seeds | Map to gap entries in requirements doc |
+| Bullet lists with "shall"/"must" | Direct requirements | Classify directly as REQ-XXX |
+
+**Speaker notes are a priority**: they often contain the engineering rationale that the slide's bullet points summarize. A slide may say "Selected SPI over I2C for sensor interface" — the notes may say "I2C limited to 400kHz, need 10MHz throughput, SPI was the only option per datasheet §3.2".
+
+See `references/pptx-processing-guide.md` for detailed extraction techniques.
 
 ### Step 1: COLLECT — Inventory all raw inputs
 
@@ -256,6 +435,8 @@ A structured system requirements document saved to `docs/requirements/[project]-
 
 After completing requirements decomposition:
 
+- [ ] All PDF inputs preprocessed via `python scripts/preprocess_pdf.py` (if PDFs exist)
+- [ ] Manifest.json reviewed for extracted figures that need human confirmation
 - [ ] All raw input sources inventoried with names, versions, dates, and owners
 - [ ] Every requirement extracted and classified by both domain and type
 - [ ] All conflicts have explicit resolutions with source precedence documented
@@ -283,5 +464,10 @@ Once requirements are decomposed, verified, and saved to `docs/requirements/`:
 
 ## See Also
 
+- For PDF text/table/figure extraction techniques, see `references/pdf-processing-guide.md`
+- For spreadsheet (BOM, pin list, register map) extraction, see `references/spreadsheet-processing-guide.md`
+- For Word document (PRD, spec, standard) extraction, see `references/docx-processing-guide.md`
+- For presentation (design review, architecture overview) extraction, see `references/pptx-processing-guide.md`
+- For preprocessing scripts, see `scripts/preprocess_pdf.py`, `scripts/preprocess_xlsx.py`, `scripts/preprocess_docx.py`, `scripts/preprocess_pptx.py`, `scripts/extract_tables.py`, `scripts/extract_figures.py`
 - For solution-level requirements review criteria, see `references/solution-requirements-analysis-checklist.md`
 - For software-specific requirements review criteria, see `references/software-requirements-analysis-checklist.md`

@@ -8,3 +8,5 @@ node_modules/
 docs/implementation-plan.md
 docs/reviews/
 docs/v2-release-notes.md
+__pycache__/
+*.pyc
