@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ./hooks/session-start.sh",
+            "commandWindows": "bash ./hooks/session-start.sh"
+          }
+        ]
+      }
+    ]
+  }
+}

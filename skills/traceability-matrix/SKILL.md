@@ -1,6 +1,6 @@
 ---
 name: traceability-matrix
-description: 追溯矩阵：构建并验证跨所有SE产物的追溯链——原始需求→系统需求→设计元素→测试用例。识别覆盖缺口、孤立设计元素和未测需求。Traceability matrix — builds and validates the traceability chain across all SE artifacts: Raw Requirements to System Requirements to Design Elements to Test Cases. Identifies coverage gaps, orphaned design elements, and untested requirements. Use when the user says 追溯, 追溯矩阵, 覆盖缺口, 追溯链, traceability, coverage gap, gap analysis, or after completing any SE artifact to verify cross-artifact integrity. Can and should be run after every phase, not just at the end.
+description: "追溯矩阵：构建并验证跨所有SE产物的追溯链——原始需求→系统需求→设计元素→测试用例。识别覆盖缺口、孤立设计元素和未测需求。Traceability matrix — builds and validates the traceability chain across all SE artifacts: Raw Requirements to System Requirements to Design Elements to Test Cases. Identifies coverage gaps, orphaned design elements, and untested requirements. Use when the user says 追溯, 追溯矩阵, 覆盖缺口, 追溯链, traceability, coverage gap, gap analysis, or after completing any SE artifact to verify cross-artifact integrity. Can and should be run after every phase, not just at the end."
 ---
 
 # Traceability Matrix
