@@ -5,8 +5,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash ./hooks/session-start.sh",
-            "commandWindows": "bash ./hooks/session-start.sh"
+            "command": "bash \"${PLUGIN_ROOT}/hooks/session-start.sh\"",
+            "commandWindows": "powershell -NoProfile -ExecutionPolicy Bypass -File \"${PLUGIN_ROOT}\\hooks\\session-start-windows.ps1\""
           }
         ]
       }

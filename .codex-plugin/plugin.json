@@ -10,6 +10,7 @@
   "license": "MIT",
   "keywords": ["systems-engineering", "architecture", "requirements", "specification", "design-review", "traceability", "chip-design", "hardware", "firmware"],
   "skills": "./skills",
+  "hooks": "./hooks/hooks.codex.json",
   "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "SE Skills",
